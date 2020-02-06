@@ -1,16 +1,11 @@
-// TODO replace with real functions
-const graphqlFetch = (req: unknown): Promise<any> => {
-  return new Promise(resolve => {
-    resolve(req);
-  });
-};
+import { createGraphqlFetch, GraphqlFetch } from "./graphqlFetch";
 
 const track = data => {
   console.log(data);
 };
 
 export interface Connection {
-  request: <Req, Res>(req: Req) => Promise<Res>;
+  graphqlFetch: GraphqlFetch;
   track: (event: string) => void;
 }
 
@@ -19,11 +14,11 @@ interface InitDetail {
   reject: (error: Error) => void;
 }
 
-const onInitialize = async (e: CustomEvent<InitDetail>) => {
-  const value = await e.detail;
+const onInitialize = (e: CustomEvent<InitDetail>) => {
+  const value = e.detail;
   try {
     value.resolve({
-      request: graphqlFetch,
+      graphqlFetch: createGraphqlFetch({}),
       track
     });
   } catch (e) {

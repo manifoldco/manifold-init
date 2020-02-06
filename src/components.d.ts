@@ -10,27 +10,27 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface MuiPlanPricing {}
+  interface ConnectedButton {}
 }
 
 declare global {
 
 
-  interface HTMLMuiPlanPricingElement extends Components.MuiPlanPricing, HTMLStencilElement {}
-  var HTMLMuiPlanPricingElement: {
-    prototype: HTMLMuiPlanPricingElement;
-    new (): HTMLMuiPlanPricingElement;
+  interface HTMLConnectedButtonElement extends Components.ConnectedButton, HTMLStencilElement {}
+  var HTMLConnectedButtonElement: {
+    prototype: HTMLConnectedButtonElement;
+    new (): HTMLConnectedButtonElement;
   };
   interface HTMLElementTagNameMap {
-    'mui-plan-pricing': HTMLMuiPlanPricingElement;
+    'connected-button': HTMLConnectedButtonElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface MuiPlanPricing {}
+  interface ConnectedButton {}
 
   interface IntrinsicElements {
-    'mui-plan-pricing': MuiPlanPricing;
+    'connected-button': ConnectedButton;
   }
 }
 
@@ -40,7 +40,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      'mui-plan-pricing': LocalJSX.MuiPlanPricing & JSXBase.HTMLAttributes<HTMLMuiPlanPricingElement>;
+      'connected-button': LocalJSX.ConnectedButton & JSXBase.HTMLAttributes<HTMLConnectedButtonElement>;
     }
   }
 }

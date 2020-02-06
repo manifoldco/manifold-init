@@ -15,24 +15,23 @@ function initialize(el: HTMLStencilElement): Promise<Connection> {
     );
   });
 }
-interface Message {
-  text: string;
-}
+
 @Component({
-  tag: "mui-plan-pricing"
+  tag: "connected-button"
 })
-export class MuiPlanPricing {
-  @Element() el: HTMLMuiPlanPricingElement;
+export class ConnectedButton {
+  @Element() el: HTMLConnectedButtonElement;
   @State() message: string;
   connection: Connection;
   async componentWillLoad() {
     this.connection = await initialize(this.el);
   }
   getData = async () => {
-    const responseMessage = await this.connection.request<Message, Message>({
-      text: "hello"
+    const { data } = await this.connection.graphqlFetch({
+      query: `{ product(label: "jawsdb-mysql") { displayName } }`,
+      element: this.el
     });
-    this.message = responseMessage.text;
+    this.message = data.product.displayName;
   };
   render() {
     return (
