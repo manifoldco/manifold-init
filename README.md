@@ -1,5 +1,1 @@
-# mui-core
-
-Manifold UI core package
-
-
+# Manifold UI Core (`mui-core`)
