@@ -1,5 +1,6 @@
 import { createGraphqlFetch, GraphqlFetch } from "./graphqlFetch";
 
+// TODO add real tracking
 const track = data => {
   console.log(data);
 };
@@ -12,17 +13,21 @@ export interface Connection {
 interface InitDetail {
   resolve: (connection: Connection) => void;
   reject: (error: Error) => void;
+  version: string;
 }
 
 const onInitialize = (e: CustomEvent<InitDetail>) => {
-  const value = e.detail;
+  const { resolve, reject, version } = e.detail;
   try {
-    value.resolve({
-      graphqlFetch: createGraphqlFetch({}),
+    resolve({
+      graphqlFetch: createGraphqlFetch({
+        element: e.target as HTMLElement,
+        version
+      }),
       track
     });
   } catch (e) {
-    value.reject(e);
+    reject(e);
   }
 };
 

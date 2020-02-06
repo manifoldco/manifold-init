@@ -9,7 +9,8 @@ function initialize(el: HTMLStencilElement): Promise<Connection> {
         bubbles: true,
         detail: {
           resolve,
-          reject
+          reject,
+          version: "<@NPM_PACKAGE_VERSION@>"
         }
       })
     );
