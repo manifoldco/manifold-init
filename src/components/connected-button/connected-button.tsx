@@ -30,7 +30,6 @@ export class ConnectedButton {
   getData = async () => {
     const { data } = await this.connection.graphqlFetch({
       query: `{ product(label: "jawsdb-mysql") { displayName } }`,
-      element: this.el,
     });
     this.message = data.product.displayName;
   };
