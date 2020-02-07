@@ -1,2 +1,2 @@
-export * from "./components";
-import "./utils/initialize";
+export * from './components';
+import './utils/initialize';

@@ -15,16 +15,39 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build --docs",
+    "build": "npm run update-version && stencil build",
+    "bundlesize": "npm run build && npx bundlesize",
     "start": "stencil build --dev --watch --serve",
+    "generate": "stencil generate",
+    "lint": "eslint --ext .js,.ts,.tsx src",
     "test": "stencil test --spec --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "test:e2e": "stencil test --e2e",
+    "test:spec": "stencil test --spec",
+    "test:coverage": "stencil test --spec --e2e --coverage --maxWorkers=2",
+    "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
+    "test:watch": "stencil test --spec --e2e --watchAll",
+    "update-version": "node scripts/version-from-git"
   },
+  "bundlesize": [
+    {
+      "path": "./dist/mui-core/index.esm.js",
+      "maxSize": "5 kB",
+      "compression": "none"
+    }
+  ],
   "devDependencies": {
     "@stencil/core": "^1.8.4",
     "@types/node": "^13.7.0",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "^1.18.2",
     "rollup-plugin-replace": "^2.2.0"
   },
-  "license": "MIT"
+  "license": "BSD-3-Clause"
 }

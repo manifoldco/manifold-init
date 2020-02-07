@@ -30,33 +30,27 @@ export interface GraphqlResponseBody<GraphqlData> {
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = <T>(
-  args: GraphqlArgs
-) => Promise<GraphqlResponseBody<T>>;
+export type GraphqlFetch = <T>(args: GraphqlArgs) => Promise<GraphqlResponseBody<T>>;
 
 export function createGraphqlFetch({
   element,
-  endpoint = () => "https://api.manifold.co/graphql",
-  version
+  endpoint = () => 'https://api.manifold.co/graphql',
+  version,
 }: CreateGraphqlFetch): GraphqlFetch {
   const options = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Connection: "keep-alive",
-      "Content-type": "application/json",
-      ...(element
-        ? { "x-manifold-component": `${element.tagName}@${version}` }
-        : {}),
-      "x-manifold-ui-core-version": "<@NPM_PACKAGE_VERSION@>"
-    }
+      Connection: 'keep-alive',
+      'Content-type': 'application/json',
+      ...(element ? { 'x-manifold-component': `${element.tagName}@${version}` } : {}),
+      'x-manifold-ui-core-version': '<@NPM_PACKAGE_VERSION@>',
+    },
   };
 
-  async function graphqlFetch<T>(
-    args: GraphqlArgs
-  ): Promise<GraphqlResponseBody<T>> {
+  async function graphqlFetch<T>(args: GraphqlArgs): Promise<GraphqlResponseBody<T>> {
     const response = await fetch(endpoint(), {
       ...options,
-      body: JSON.stringify(args)
+      body: JSON.stringify(args),
     }).catch((e: Response) => {
       return Promise.reject(e);
     });
@@ -67,13 +61,13 @@ export function createGraphqlFetch({
       const errors = [
         {
           message: response.statusText,
-          extensions: { type: response.status.toString() }
-        }
+          extensions: { type: response.status.toString() },
+        },
       ] as GraphqlError[];
 
       return {
         data: null,
-        errors
+        errors,
       };
     }
 

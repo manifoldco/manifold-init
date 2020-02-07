@@ -1,4 +1,4 @@
-import { createGraphqlFetch, GraphqlFetch } from "./graphqlFetch";
+import { createGraphqlFetch, GraphqlFetch } from './graphqlFetch';
 
 // TODO add real tracking
 const track = data => {
@@ -22,13 +22,13 @@ const onInitialize = (e: CustomEvent<InitDetail>) => {
     resolve({
       graphqlFetch: createGraphqlFetch({
         element: e.target as HTMLElement,
-        version
+        version,
       }),
-      track
+      track,
     });
   } catch (e) {
     reject(e);
   }
 };
 
-document.addEventListener("mui-initialize", onInitialize);
+document.addEventListener('mui-initialize', onInitialize);
