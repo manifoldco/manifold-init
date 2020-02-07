@@ -14,8 +14,6 @@ type GraphqlRequest =
       variables?: { [key: string]: unknown };
     }; // require query or mutation, but not both
 
-type GraphqlArgs = GraphqlRequest & { element: HTMLElement };
-
 export interface GraphqlError {
   message: string;
   locations?: { line: number; column: number }[];
@@ -30,7 +28,7 @@ export interface GraphqlResponseBody<GraphqlData> {
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = <T>(args: GraphqlArgs) => Promise<GraphqlResponseBody<T>>;
+export type GraphqlFetch = <T>(args: GraphqlRequest) => Promise<GraphqlResponseBody<T>>;
 
 export function createGraphqlFetch({
   element,
@@ -47,7 +45,7 @@ export function createGraphqlFetch({
     },
   };
 
-  async function graphqlFetch<T>(args: GraphqlArgs): Promise<GraphqlResponseBody<T>> {
+  async function graphqlFetch<T>(args: GraphqlRequest): Promise<GraphqlResponseBody<T>> {
     const response = await fetch(endpoint(), {
       ...options,
       body: JSON.stringify(args),
@@ -75,7 +73,7 @@ export function createGraphqlFetch({
     return body;
   }
 
-  return function(args: GraphqlArgs) {
+  return function(args: GraphqlRequest) {
     return graphqlFetch(args);
   };
 }

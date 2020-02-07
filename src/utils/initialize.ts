@@ -2,6 +2,7 @@ import { createGraphqlFetch, GraphqlFetch } from './graphqlFetch';
 
 // TODO add real tracking
 const track = data => {
+  // eslint-disable-next-line no-console
   console.log(data);
 };
 
@@ -26,8 +27,8 @@ const onInitialize = (e: CustomEvent<InitDetail>) => {
       }),
       track,
     });
-  } catch (e) {
-    reject(e);
+  } catch (error) {
+    reject(error);
   }
 };
 
