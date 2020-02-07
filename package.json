@@ -36,6 +36,7 @@
     }
   ],
   "devDependencies": {
+    "@manifoldco/eslint-plugin-stencil": "^0.4.1",
     "@stencil/core": "^1.8.4",
     "@types/node": "^13.7.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",

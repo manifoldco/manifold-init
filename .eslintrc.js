@@ -28,8 +28,6 @@ module.exports = {
     },
   },
   rules: {
-    '@manifoldco/stencil/component-prefix': ['error', { prefix: 'manifold-' }],
-    '@manifoldco/stencil/require-render-decorator': ['error'],
     '@manifoldco/stencil/restrict-required-props': 'error',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
