@@ -1,7 +1,8 @@
-import { createGraphqlFetch, GraphqlFetch } from "./graphqlFetch";
+import { createGraphqlFetch, GraphqlFetch } from './graphqlFetch';
 
 // TODO add real tracking
 const track = data => {
+  // eslint-disable-next-line no-console
   console.log(data);
 };
 
@@ -22,13 +23,13 @@ const onInitialize = (e: CustomEvent<InitDetail>) => {
     resolve({
       graphqlFetch: createGraphqlFetch({
         element: e.target as HTMLElement,
-        version
+        version,
       }),
-      track
+      track,
     });
-  } catch (e) {
-    reject(e);
+  } catch (error) {
+    reject(error);
   }
 };
 
-document.addEventListener("mui-initialize", onInitialize);
+document.addEventListener('mui-initialize', onInitialize);
