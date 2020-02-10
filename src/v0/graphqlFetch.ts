@@ -40,8 +40,8 @@ export function createGraphqlFetch({
     headers: {
       Connection: 'keep-alive',
       'Content-type': 'application/json',
-      ...(element ? { 'x-manifold-component': `${element.tagName}@${version}` } : {}),
-      'x-manifold-ui-core-version': '<@NPM_PACKAGE_VERSION@>',
+      ...(element ? { 'x-mui-component': `${element.tagName}@${version}` } : {}),
+      'x-manifold-mui-core-version': '<@NPM_PACKAGE_VERSION@>',
     },
   };
 
