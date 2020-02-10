@@ -6,15 +6,6 @@ const track = data => {
   console.log(data);
 };
 
-const VERSIONS = ['0.0.1'];
-
-const validateVersion = (version: string, element: HTMLElement) => {
-  const isValid = VERSIONS.includes(version);
-  if (!isValid) {
-    throw new Error(`Version ${version} of ${element.tagName} is not recognized by mui-core.`);
-  }
-};
-
 export interface Connection {
   graphqlFetch: GraphqlFetch;
   track: (event: string) => void;
@@ -26,21 +17,35 @@ interface InitDetail {
   version: string;
 }
 
-const onInitialize = (e: CustomEvent<InitDetail>) => {
-  const { resolve, reject, version } = e.detail;
+const getConnection = (e: CustomEvent<InitDetail>) => {
+  const { version } = e.detail;
   const element = e.target as HTMLElement;
 
-  try {
-    validateVersion(version, element);
-    resolve({
+  const connections = {
+    '0.0.1': {
       graphqlFetch: createGraphqlFetch({
         element,
         version,
       }),
       track,
-    });
+    },
+  };
+
+  const currentVersion = connections[version];
+
+  if (!currentVersion) {
+    throw new Error(
+      `Version ${version} doesn't exist. Ensure you have the latest release of mui-core.`
+    );
+  }
+  return currentVersion;
+};
+
+const onInitialize = (e: CustomEvent<InitDetail>) => {
+  try {
+    e.detail.resolve(getConnection(e));
   } catch (error) {
-    reject(error);
+    e.detail.reject(error);
   }
 };
 
