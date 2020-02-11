@@ -1,5 +1,9 @@
 {
   "name": "mui-core",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manifoldco/mui-core.git"
+  },
   "version": "0.0.1",
   "description": "Stencil Component Starter",
   "main": "dist/index.js",

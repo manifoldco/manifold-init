@@ -1,6 +1,6 @@
 import { Component, Element, State, h } from '@stencil/core';
 import { HTMLStencilElement } from '@stencil/core/internal';
-import { Connection } from '../../utils/initialize';
+import { Connection } from '../../v0';
 
 function initialize(el: HTMLStencilElement): Promise<Connection> {
   return new Promise((resolve, reject) => {
@@ -10,7 +10,8 @@ function initialize(el: HTMLStencilElement): Promise<Connection> {
         detail: {
           resolve,
           reject,
-          version: '<@NPM_PACKAGE_VERSION@>',
+          version: 0,
+          componentVersion: '<@NPM_PACKAGE_VERSION@>',
         },
       })
     );
