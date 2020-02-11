@@ -1,6 +1,6 @@
 import connection, { InitDetail } from './v0';
 
-const getConnection = async (e: CustomEvent<InitDetail>) => {
+const getConnection = (e: CustomEvent<InitDetail>) => {
   const { version } = e.detail;
 
   switch (version) {
@@ -13,9 +13,9 @@ const getConnection = async (e: CustomEvent<InitDetail>) => {
   }
 };
 
-const onInitialize = async (e: CustomEvent<InitDetail>) => {
+const onInitialize = (e: CustomEvent<InitDetail>) => {
   try {
-    e.detail.resolve(await getConnection(e));
+    e.detail.resolve(getConnection(e));
   } catch (error) {
     e.detail.reject(error);
   }
