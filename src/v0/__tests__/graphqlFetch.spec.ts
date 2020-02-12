@@ -1,8 +1,5 @@
-import fetchMock from 'fetch-mock';
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-// eslint-disable-next-line import/first
+import fetchMock from 'fetch-mock';
 import { createGraphqlFetch } from '../graphqlFetch';
 
 describe('graphqlFetch', () => {
@@ -77,7 +74,7 @@ describe('graphqlFetch', () => {
       fetchMock.mock(graphqlEndpoint, { data: {} });
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
-        version: 'test',
+        version,
         element,
       });
       await fetcher({ query: '' });
