@@ -1,7 +1,6 @@
 import { Component, Element, State, h } from '@stencil/core';
 import { HTMLStencilElement } from '@stencil/core/internal';
 import { Connection } from '../../v0';
-import { GraphqlError } from '../../v0/graphqlFetch';
 
 function initialize(el: HTMLStencilElement): Promise<Connection> {
   return new Promise((resolve, reject) => {
