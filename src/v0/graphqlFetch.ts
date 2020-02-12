@@ -1,7 +1,32 @@
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Transforms an HTTP error to fit the GraphQL error format.
+const transformError = (response: Response) => {
+  const errors = [
+    {
+      message: response.statusText,
+      extensions: { type: response.status.toString() },
+    },
+  ] as GraphqlError[];
+
+  return {
+    data: null,
+    errors,
+  };
+};
+
+const authFailed = errors =>
+  errors.some(e => {
+    return e.extensions && e.extensions.type === 'AuthFailed';
+  });
+
 interface CreateGraphqlFetch {
   endpoint?: () => string;
   element: HTMLElement;
   version: string;
+  retries?: number;
 }
 
 type GraphqlRequest =
@@ -34,8 +59,9 @@ export function createGraphqlFetch({
   element,
   endpoint = () => 'https://api.manifold.co/graphql',
   version,
+  retries = 3,
 }: CreateGraphqlFetch): GraphqlFetch {
-  const options = {
+  const options: RequestInit = {
     method: 'POST',
     headers: {
       Connection: 'keep-alive',
@@ -45,35 +71,50 @@ export function createGraphqlFetch({
     },
   };
 
-  async function graphqlFetch<T>(args: GraphqlRequest): Promise<GraphqlResponseBody<T>> {
-    const response = await fetch(endpoint(), {
-      ...options,
-      body: JSON.stringify(args),
-    }).catch((e: Response) => {
+  async function graphqlFetch<T>(
+    args: GraphqlRequest,
+    attempts: number
+  ): Promise<GraphqlResponseBody<T>> {
+    const canRetry = attempts < retries;
+
+    // Send Request
+    let response;
+    try {
+      options.body = JSON.stringify(args);
+      response = await fetch(endpoint(), options);
+    } catch (e) {
+      // Retry
+      if (canRetry) {
+        await wait(attempts ** 2 * 1000);
+        return graphqlFetch(args, attempts + 1);
+      }
       return Promise.reject(e);
-    });
-    const body: GraphqlResponseBody<T> = await response.json();
-
-    // handle non-GQL responses from errors
-    if (!body.data && !Array.isArray(body.errors)) {
-      const errors = [
-        {
-          message: response.statusText,
-          extensions: { type: response.status.toString() },
-        },
-      ] as GraphqlError[];
-
-      return {
-        data: null,
-        errors,
-      };
     }
 
-    // return everything to the user
+    // Retry on server errors other unless internal.
+    const internalServerError = response.status > 500;
+    if (internalServerError && canRetry) {
+      await wait(attempts ** 2 * 1000);
+      return graphqlFetch(args, attempts + 1);
+    }
+
+    const body: GraphqlResponseBody<T> = await response.json();
+
+    // Normalize HTTP errors to GraphQL errors.
+    const unexpectedResponseBody = !body.data && !Array.isArray(body.errors);
+    if (unexpectedResponseBody) {
+      return transformError(response);
+    }
+
+    // Reauthenticate and retry on auth errors.
+    if (body.errors && authFailed(body.errors) && canRetry) {
+      // TODO retry auth
+    }
+
     return body;
   }
 
   return function(args: GraphqlRequest) {
-    return graphqlFetch(args);
+    return graphqlFetch(args, 0);
   };
 }
