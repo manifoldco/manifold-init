@@ -1,6 +1,6 @@
 interface CreateGraphqlFetch {
   endpoint?: () => string;
-  element?: HTMLElement;
+  element: HTMLElement;
   version: string;
 }
 

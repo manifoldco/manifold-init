@@ -14,6 +14,7 @@ describe('graphqlFetch', () => {
   describe('general', () => {
     it('defaults to api.manifold.co/graphql', async () => {
       const fetcher = createGraphqlFetch({
+        element: document.createElement('custom-element'),
         version: 'version',
       });
       fetchMock.mock('https://api.manifold.co/graphql', {
@@ -32,6 +33,7 @@ describe('graphqlFetch', () => {
       };
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
+        element: document.createElement('custom-element'),
         version: 'test',
       });
 
@@ -52,6 +54,7 @@ describe('graphqlFetch', () => {
       const err = new Error('ohnoes');
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
+        element: document.createElement('custom-element'),
         version: 'test',
       });
 
