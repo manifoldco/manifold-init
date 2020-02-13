@@ -78,7 +78,7 @@ export function createGraphqlFetch({
     const canRetry = attempts < retries;
 
     // Send Request
-    let response;
+    let response: Response;
     try {
       options.body = JSON.stringify(args);
       response = await fetch(endpoint(), options);
@@ -91,9 +91,15 @@ export function createGraphqlFetch({
       return Promise.reject(e);
     }
 
-    // Retry on server errors other unless internal.
+    // Immediately reject on internal server error.
     const internalServerError = response.status > 500;
-    if (internalServerError && canRetry) {
+    if (internalServerError) {
+      return Promise.reject(new Error(response.statusText));
+    }
+
+    // Retry on other server errors.
+    const serverError = response.status > 500;
+    if (serverError && canRetry) {
       await wait(attempts ** 2 * 1000);
       return graphqlFetch(args, attempts + 1);
     }
