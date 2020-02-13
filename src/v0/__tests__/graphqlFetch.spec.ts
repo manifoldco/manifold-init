@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fetchMock from 'fetch-mock';
 import { createGraphqlFetch } from '../graphqlFetch';
+import { ManifoldError, ErrorType } from '../errors/ManifoldError';
 
 describe('graphqlFetch', () => {
   const graphqlEndpoint = 'http://test.test/graphql';
@@ -51,7 +52,7 @@ describe('graphqlFetch', () => {
     });
 
     it('throws if the fetch errored', () => {
-      const err = new Error('ohnoes');
+      const err = new ManifoldError({ type: ErrorType.ServerError });
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
         element: document.createElement('custom-element'),
@@ -65,6 +66,7 @@ describe('graphqlFetch', () => {
         query: 'myQuery',
       }).catch(result => {
         expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+        console.log(result, err);
         expect(result).toEqual(err);
       });
     });
