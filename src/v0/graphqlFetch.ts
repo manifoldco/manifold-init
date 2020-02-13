@@ -1,3 +1,5 @@
+import { ManifoldAuthorizationError, ManifoldNetworkError, ManifoldServerError } from './errors';
+
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -17,10 +19,8 @@ const transformError = (response: Response) => {
   };
 };
 
-const authFailed = errors =>
-  errors.some(e => {
-    return e.extensions && e.extensions.type === 'AuthFailed';
-  });
+const findAuthError = (errors: GraphqlError[] = []) =>
+  errors.find(e => e.extensions && e.extensions.type === 'AuthFailed');
 
 interface CreateGraphqlFetch {
   endpoint?: () => string;
@@ -88,20 +88,23 @@ export function createGraphqlFetch({
         await wait(attempts ** 2 * 1000);
         return graphqlFetch(args, attempts + 1);
       }
-      return Promise.reject(e);
+      return Promise.reject(new ManifoldNetworkError(e));
     }
 
     // Immediately reject on internal server error.
     const internalServerError = response.status > 500;
     if (internalServerError) {
-      return Promise.reject(new Error(response.statusText));
+      return Promise.reject(new ManifoldServerError(response.statusText));
     }
 
     // Retry on other server errors.
     const serverError = response.status > 500;
-    if (serverError && canRetry) {
-      await wait(attempts ** 2 * 1000);
-      return graphqlFetch(args, attempts + 1);
+    if (serverError) {
+      if (canRetry) {
+        await wait(attempts ** 2 * 1000);
+        return graphqlFetch(args, attempts + 1);
+      }
+      return Promise.reject(new ManifoldServerError(response.statusText));
     }
 
     const body: GraphqlResponseBody<T> = await response.json();
@@ -113,8 +116,10 @@ export function createGraphqlFetch({
     }
 
     // Reauthenticate and retry on auth errors.
-    if (body.errors && authFailed(body.errors) && canRetry) {
+    const authError = findAuthError(body.errors);
+    if (authError && canRetry) {
       // TODO retry auth
+      return Promise.reject(new ManifoldAuthorizationError(authError.message));
     }
 
     return body;
