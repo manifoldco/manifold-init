@@ -1,4 +1,4 @@
-import { ManifoldAuthorizationError, ManifoldNetworkError, ManifoldServerError } from './errors';
+import { ManifoldError, ErrorType } from './ManifoldError';
 
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -88,13 +88,15 @@ export function createGraphqlFetch({
         await wait(attempts ** 2 * 1000);
         return graphqlFetch(args, attempts + 1);
       }
-      return Promise.reject(new ManifoldNetworkError());
+      return Promise.reject(new ManifoldError({ type: ErrorType.NetworkError }));
     }
 
     // Immediately reject on internal server error.
     const internalServerError = response.status > 500;
     if (internalServerError) {
-      return Promise.reject(new ManifoldServerError(response.statusText));
+      return Promise.reject(
+        new ManifoldError({ type: ErrorType.ServerError, message: response.statusText })
+      );
     }
 
     // Retry on other server errors.
@@ -104,7 +106,9 @@ export function createGraphqlFetch({
         await wait(attempts ** 2 * 1000);
         return graphqlFetch(args, attempts + 1);
       }
-      return Promise.reject(new ManifoldServerError(response.statusText));
+      return Promise.reject(
+        new ManifoldError({ type: ErrorType.ServerError, message: response.statusText })
+      );
     }
 
     const body: GraphqlResponseBody<T> = await response.json();
@@ -119,7 +123,9 @@ export function createGraphqlFetch({
     const authError = findAuthError(body.errors);
     if (authError && canRetry) {
       // TODO retry auth
-      return Promise.reject(new ManifoldAuthorizationError(authError.message));
+      return Promise.reject(
+        new ManifoldError({ type: ErrorType.AuthorizationError, message: authError.message })
+      );
     }
 
     return body;
