@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fetchMock from 'fetch-mock';
 import { createGraphqlFetch } from '../graphqlFetch';
+import { ErrorType, ManifoldError } from '../ManifoldError';
 
 describe('graphqlFetch', () => {
   const graphqlEndpoint = 'http://test.test/graphql';
@@ -51,7 +52,7 @@ describe('graphqlFetch', () => {
     });
 
     it('throws if the fetch errored', () => {
-      const err = new Error('ohnoes');
+      const err = new ManifoldError({ type: ErrorType.NetworkError });
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
         element: document.createElement('custom-element'),
@@ -63,9 +64,9 @@ describe('graphqlFetch', () => {
       expect.assertions(2);
       return fetcher({
         query: 'myQuery',
-      }).catch(result => {
+      }).catch((result: ManifoldError) => {
         expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-        expect(result).toEqual(err);
+        expect(result.type).toBe(ErrorType.NetworkError);
       });
     });
 
