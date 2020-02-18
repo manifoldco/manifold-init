@@ -24,6 +24,7 @@
     "start": "stencil build --dev --watch --serve",
     "generate": "stencil generate",
     "lint": "eslint --ext .js,.ts,.tsx src",
+    "publish": "node scripts/npm-publish",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",
     "test:spec": "stencil test --spec",
