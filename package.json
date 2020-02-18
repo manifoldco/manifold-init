@@ -1,5 +1,5 @@
 {
-  "name": "mui-core",
+  "name": "@manifoldco/mui-core",
   "author": "manifoldco",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "bugs": {
     "url": "https://github.com/manifoldco/ui/issues"
   },
-  "version": "v0.0.0-test.7",
+  "version": "0.0.1-test.1",
   "description": "Manifold UI Core",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
