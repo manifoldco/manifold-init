@@ -1,5 +1,5 @@
 const { readFileSync, writeFileSync } = require('fs');
-const { resolve } = require('path');
+const path = require('path');
 const { execSync } = require('child_process');
 
 const SELECT_TAG = /-.*/; // Selects anything after a hyphen, or nothing
@@ -24,13 +24,14 @@ const parseTagName = version => {
 };
 
 /* eslint-disable no-console */
-const version = process.env.TAG.replace('refs/tags/', '');
+const version = process.env.TAG.replace('refs/tags/v', '');
 const timeStart = process.hrtime();
 
 console.log(`📦 Publishing ${version} to npm...`);
 
+// Update package version from tag
 if (version) {
-  const pkgJSON = resolve(__dirname, '..', 'package.json');
+  const pkgJSON = path.resolve(__dirname, '..', 'package.json');
   const pkgManifest = JSON.parse(readFileSync(pkgJSON, 'utf8'));
   pkgManifest.version = version;
   writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2).concat('\n'), 'utf8');
@@ -38,10 +39,9 @@ if (version) {
 
 // 2. Determine if @latest or @[other]
 const npmTag = parseTagName(version);
-console.log({ npmTag });
 
 // 3. Publish to npm
-execSync(`npm publish --tag ${npmTag}`, {
+execSync(`npm publish ../ --tag ${npmTag}`, {
   cwd: __dirname, // run the command from this folder (so it can run anywhere)
 });
 

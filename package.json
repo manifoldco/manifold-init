@@ -1,11 +1,16 @@
 {
   "name": "mui-core",
+  "author": "manifoldco",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/mui-core.git"
   },
-  "version": "0.0.1",
-  "description": "Stencil Component Starter",
+  "homepage": "https://github.com/manifoldco/ui",
+  "bugs": {
+    "url": "https://github.com/manifoldco/ui/issues"
+  },
+  "version": "v0.0.0-test.7",
+  "description": "Manifold UI Core",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "es2015": "dist/esm/index.mjs",
@@ -15,8 +20,7 @@
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/mui-core/mui-core.js",
   "files": [
-    "dist/",
-    "loader/"
+    "dist/"
   ],
   "scripts": {
     "build": "npm run update-version && stencil build",
