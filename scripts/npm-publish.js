@@ -1,5 +1,6 @@
 const { readFileSync, writeFileSync } = require('fs');
 const { resolve } = require('path');
+const { execSync } = require('child_process');
 
 const SELECT_TAG = /-.*/; // Selects anything after a hyphen, or nothing
 
