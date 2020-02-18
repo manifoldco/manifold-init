@@ -13,7 +13,6 @@ const parseTagName = version => {
   const tag = SELECT_TAG.exec(version);
 
   if (tag && tag[0].length > 1) {
-    console.log(tag);
     // Remove hyphens and anything trailing a dot
     const tagName = tag[0].replace('-', '').replace(/\.[^.]+$/, '');
     return tagName;
@@ -36,15 +35,14 @@ if (version) {
   writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2).concat('\n'), 'utf8');
 }
 
-// TODO make more readable
 // 2. Determine if @latest or @[other]
 const npmTag = parseTagName(version);
 console.log({ npmTag });
 
 // 3. Publish to npm
-// execSync(`npm publish --tag ${npmTag}`, {
-//   cwd: __dirname, // run the command from this folder (so it can run anywhere)
-// });
+execSync(`npm publish --tag ${npmTag}`, {
+  cwd: __dirname, // run the command from this folder (so it can run anywhere)
+});
 
 const timeEnd = process.hrtime(timeStart);
 const time = timeEnd[0] + Math.round(timeEnd[1] / 100000000) / 10;
