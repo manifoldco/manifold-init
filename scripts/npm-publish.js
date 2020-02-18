@@ -23,7 +23,7 @@ const parseTagName = version => {
 };
 
 /* eslint-disable no-console */
-const version = process.env.TAG;
+const version = process.env.TAG.replace('refs/tags/', '');
 const timeStart = process.hrtime();
 
 console.log(`📦 Publishing ${version} to npm...`);
