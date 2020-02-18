@@ -13,8 +13,9 @@ const parseTagName = version => {
   const tag = SELECT_TAG.exec(version);
 
   if (tag && tag[0].length > 1) {
+    console.log(tag);
     // Remove hyphens and anything trailing a dot
-    const tagName = tag.replace('-', '').replace(/\.[^.]+$/, '');
+    const tagName = tag[0].replace('-', '').replace(/\.[^.]+$/, '');
     return tagName;
   }
 

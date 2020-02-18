@@ -1,7 +1,6 @@
 name: publish
 
 on:
-  # [pull_request]
   push:
     tags:
       # Run on tags starting with
