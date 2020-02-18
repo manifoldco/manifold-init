@@ -1,10 +1,11 @@
 name: publish
 
 on:
-  push:
-    tags:
-      # Run on tags starting with
-      - v*
+  [pull-request]
+  # push:
+  #   tags:
+  #     # Run on tags starting with
+  #     - v*
 
 jobs:
   publish:
