@@ -11,9 +11,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     env:
-      TAG: '{{ github.ref }}'
+      TAG: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - run: npm install
+      # - run: npm install
       - run: npm run publish
