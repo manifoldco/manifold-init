@@ -25,6 +25,7 @@ UserInterfaceState.xcuserstate
 .vscode/
 coverage/
 dist/
+loader/
 node_modules/
 pkg/
 www/
