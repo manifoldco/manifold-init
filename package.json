@@ -1,6 +1,7 @@
 {
   "name": "@manifoldco/mui-core",
   "author": "manifoldco",
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/mui-core.git"
@@ -29,7 +30,7 @@
     "generate": "stencil generate",
     "lint": "eslint --ext .js,.ts,.tsx src",
     "prepare": "node scripts/version-from-git",
-    "publish": "node scripts/npm-publish",
+    "prepublishOnly": "npm run build",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",
     "test:spec": "stencil test --spec",
