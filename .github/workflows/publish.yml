@@ -17,6 +17,6 @@ jobs:
       # - run: npm run install
       # - run: npm run build
       - run: |
-          echo "@manifoldco:registry=https://npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN
+          echo "@manifoldco:registry=https://registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN
           }}" > ~/.npmrc
       - run: npm run publish
