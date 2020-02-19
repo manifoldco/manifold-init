@@ -23,11 +23,12 @@
     "dist/"
   ],
   "scripts": {
-    "build": "npm run update-version && stencil build",
+    "build": "stencil build",
     "bundlesize": "npm run build && npx bundlesize",
     "start": "stencil build --dev --watch --serve",
     "generate": "stencil generate",
     "lint": "eslint --ext .js,.ts,.tsx src",
+    "prepare": "node scripts/version-from-git",
     "publish": "node scripts/npm-publish",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",
