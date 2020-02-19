@@ -20,9 +20,6 @@
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/mui-core/mui-core.js",
-  "files": [
-    "dist/"
-  ],
   "scripts": {
     "build": "stencil build",
     "bundlesize": "npm run build && npx bundlesize",
