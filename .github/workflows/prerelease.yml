@@ -17,5 +17,5 @@ jobs:
         run: npm install
       - name: Set registry
         run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
-      - name: Publish pre-release of @manifoldco/mui-core
+      - name: Publish pre-release of @manifoldco/mui-core 🤫
         run: 'npm publish --tag next'
