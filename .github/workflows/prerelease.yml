@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - run: npm install
-      - run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
-      - run: 'npm publish --tag next'
+      - name: Install dependencies
+        run: npm install
+      - name: Set registry
+        run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
+      - name: Publish pre-release of @manifoldco/mui-core
+        run: 'npm publish --tag next'
