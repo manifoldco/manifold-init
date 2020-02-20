@@ -1,7 +1,4 @@
-dist/
-www/
-loader/
-
+# System
 *~
 *.sw[mnpcod]
 *.log
@@ -11,16 +8,25 @@ loader/
 log.txt
 *.sublime-project
 *.sublime-workspace
-
-.stencil/
-.idea/
-.vscode/
-.sass-cache/
-.versions/
-node_modules/
-$RECYCLE.BIN/
-
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
 .env
+
+# Manifold
+.manifold.yml
+
+# Stencil
+.idea/
+.sass-cache/
+.stencil/
+.versions/
+.vscode/
+coverage/
+dist/
+loader/
+node_modules/
+www/
+$RECYCLE.BIN/
+
+.npmrc
