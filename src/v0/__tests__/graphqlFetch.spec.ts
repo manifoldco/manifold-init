@@ -16,7 +16,7 @@ describe('graphqlFetch', () => {
     it('defaults to api.manifold.co/graphql', async () => {
       const fetcher = createGraphqlFetch({
         element: document.createElement('custom-element'),
-        version: 'version',
+        componentVersion: 'version',
       });
       fetchMock.mock('https://api.manifold.co/graphql', {
         status: 200,
@@ -35,7 +35,7 @@ describe('graphqlFetch', () => {
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
         element: document.createElement('custom-element'),
-        version: 'test',
+        componentVersion: 'test',
       });
 
       fetchMock.mock(graphqlEndpoint, {
@@ -56,7 +56,7 @@ describe('graphqlFetch', () => {
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
         element: document.createElement('custom-element'),
-        version: 'test',
+        componentVersion: 'test',
       });
 
       fetchMock.mock(graphqlEndpoint, { throws: err });
@@ -72,20 +72,20 @@ describe('graphqlFetch', () => {
 
     it('emits component name and npm version', async () => {
       const tagName = 'my-custom-tag';
-      const version = 'test';
+      const componentVersion = 'test';
       const element = document.createElement(tagName);
 
       fetchMock.mock(graphqlEndpoint, { data: {} });
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
-        version,
+        componentVersion,
         element,
       });
       await fetcher({ query: '' });
 
       const [, req] = fetchMock.calls()[0];
       const headers = (req && req.headers) as any;
-      expect(headers['x-mui-component']).toBe(`${tagName.toUpperCase()}@${version}`); // expect our component name to be there
+      expect(headers['x-mui-component']).toBe(`${tagName.toUpperCase()}@${componentVersion}`); // expect our component name to be there
     });
   });
 });

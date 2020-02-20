@@ -25,7 +25,7 @@ const findAuthError = (errors: GraphqlError[] = []) =>
 interface CreateGraphqlFetch {
   endpoint?: () => string;
   element: HTMLElement;
-  version: string;
+  componentVersion: string;
   retries?: number;
 }
 
@@ -58,7 +58,7 @@ export type GraphqlFetch = <T>(args: GraphqlRequest) => Promise<GraphqlResponseB
 export function createGraphqlFetch({
   element,
   endpoint = () => 'https://api.manifold.co/graphql',
-  version,
+  componentVersion,
   retries = 3,
 }: CreateGraphqlFetch): GraphqlFetch {
   const options: RequestInit = {
@@ -66,7 +66,7 @@ export function createGraphqlFetch({
     headers: {
       Connection: 'keep-alive',
       'Content-type': 'application/json',
-      ...(element ? { 'x-mui-component': `${element.tagName}@${version}` } : {}),
+      ...(element ? { 'x-mui-component': `${element.tagName}@${componentVersion}` } : {}),
       'x-manifold-mui-core-version': '<@NPM_PACKAGE_VERSION@>',
     },
   };

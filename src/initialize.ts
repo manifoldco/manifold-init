@@ -1,24 +1,27 @@
-import connection, { InitDetail } from './v0';
+import { Connection } from './v0';
 
-const getConnection = (e: CustomEvent<InitDetail>) => {
-  const { version } = e.detail;
+interface Initialize {
+  element: HTMLElement;
+  connectionVersion?: number;
+  componentVersion: string;
+}
 
-  switch (version) {
-    case 0:
-      return connection(e);
-    default:
-      throw new Error(
-        `Version ${version} doesn't exist. Ensure you have the latest release of mui-core.`
-      );
-  }
-};
-
-const onInitialize = (e: CustomEvent<InitDetail>) => {
-  try {
-    e.detail.resolve(getConnection(e));
-  } catch (error) {
-    e.detail.reject(error);
-  }
-};
-
-document.addEventListener('mui-initialize', onInitialize);
+export default function initialize({
+  element,
+  connectionVersion,
+  componentVersion,
+}: Initialize): Promise<Connection> {
+  return new Promise((resolve, reject) => {
+    element.dispatchEvent(
+      new CustomEvent('mui-initialize', {
+        bubbles: true,
+        detail: {
+          resolve,
+          reject,
+          connectionVersion,
+          componentVersion,
+        },
+      })
+    );
+  });
+}

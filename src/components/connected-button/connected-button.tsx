@@ -1,22 +1,6 @@
 import { Component, Element, State, h } from '@stencil/core';
-import { HTMLStencilElement } from '@stencil/core/internal';
+import initialize from '../../initialize';
 import { Connection } from '../../v0';
-
-function initialize(el: HTMLStencilElement): Promise<Connection> {
-  return new Promise((resolve, reject) => {
-    el.dispatchEvent(
-      new CustomEvent('mui-initialize', {
-        bubbles: true,
-        detail: {
-          resolve,
-          reject,
-          version: 0,
-          componentVersion: '<@NPM_PACKAGE_VERSION@>',
-        },
-      })
-    );
-  });
-}
 
 @Component({
   tag: 'connected-button',
@@ -28,7 +12,11 @@ export class ConnectedButton {
   @State() unauthenticated?: string;
   connection: Connection;
   async componentWillLoad() {
-    this.connection = await initialize(this.el);
+    this.connection = await initialize({
+      element: this.el,
+      connectionVersion: 0,
+      componentVersion: '<@NPM_PACKAGE_VERSION@>',
+    });
   }
   getDataSuccess = async () => {
     const response = await this.connection.graphqlFetch({

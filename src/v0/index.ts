@@ -14,7 +14,7 @@ export interface Connection {
 export interface InitDetail {
   resolve: (connection: Connection) => void;
   reject: (error: Error) => void;
-  version: 0;
+  connectionVersion: 0;
   componentVersion: string;
 }
 
@@ -25,7 +25,7 @@ const connection = (e: CustomEvent<InitDetail>) => {
   return {
     graphqlFetch: createGraphqlFetch({
       element,
-      version: componentVersion,
+      componentVersion,
     }),
     track,
   };
