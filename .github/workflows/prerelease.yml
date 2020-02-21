@@ -22,6 +22,6 @@ jobs:
       - name: Publish pre-release of @manifoldco/mui-core 🤫
         run: 'npm publish --tag next'
       - name: Copy types
-        run: cp -r ../dist/types/v* ./
+        run: cp -r ./dist/types/v* ./mui-core-types/
       - name: Publish pre-release of @manifoldco/mui-core-types 🤫
         run: 'npm publish mui-core-types/ --tag next'
