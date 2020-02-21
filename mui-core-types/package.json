@@ -1,5 +1,5 @@
 {
-  "name": "mui-core-types",
+  "name": "@manifoldco/mui-core-types",
   "version": "0.0.1",
   "main": "../dist/index.js",
   "module": "../dist/index.mjs",
@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
-    "dist/types/v*"
+    "../dist/types/"
   ],
   "author": "manifoldco",
   "license": "MIT"
