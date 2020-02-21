@@ -19,14 +19,18 @@ try {
 
 if (version) {
   // main package
-  const pkgJSON = path.resolve(__dirname, '..', 'package.json');
-  const pkgManifest = JSON.parse(fs.readFileSync(pkgJSON, 'utf8'));
-  pkgManifest.version = version;
-  fs.writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2).concat('\n'), 'utf8');
+  {
+    const pkgJSON = path.resolve(__dirname, '..', 'package.json');
+    const pkgManifest = JSON.parse(fs.readFileSync(pkgJSON, 'utf8'));
+    pkgManifest.version = version;
+    fs.writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2).concat('\n'), 'utf8');
+  }
 
   // types package
-  const pkgJSON = path.resolve(__dirname, '..', 'mui-core-types', 'package.json');
-  const pkgManifest = JSON.parse(fs.readFileSync(pkgJSON, 'utf8'));
-  pkgManifest.version = version;
-  fs.writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2).concat('\n'), 'utf8');
+  {
+    const pkgJSON = path.resolve(__dirname, '..', 'mui-core-types', 'package.json');
+    const pkgManifest = JSON.parse(fs.readFileSync(pkgJSON, 'utf8'));
+    pkgManifest.version = version;
+    fs.writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2).concat('\n'), 'utf8');
+  }
 }
