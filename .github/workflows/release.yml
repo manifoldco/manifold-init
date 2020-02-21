@@ -15,6 +15,8 @@ jobs:
       - uses: actions/setup-node@v1
       - name: Install dependencies
         run: npm install
+      - name: Build
+        run: npm run build
       - name: Set registry
         run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
       - name: Publish new release of @manifoldco/mui-core 🚀

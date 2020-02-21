@@ -15,7 +15,11 @@ jobs:
       - uses: actions/setup-node@v1
       - name: Install dependencies
         run: npm install
+      - name: Build
+        run: npm run build
       - name: Set registry
         run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
       - name: Publish pre-release of @manifoldco/mui-core 🤫
         run: 'npm publish --tag next'
+      - name: Publish pre-release of @manifoldco/mui-core-types 🤫
+        run: 'npm publish mui-core-types/ --tag next'
