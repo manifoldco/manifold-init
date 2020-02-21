@@ -1,6 +1,7 @@
 {
   "name": "@manifoldco/mui-core-types",
   "version": "0.0.1",
+  "private": false,
   "main": "../dist/index.js",
   "module": "../dist/index.mjs",
   "es2015": "../dist/esm/index.mjs",
