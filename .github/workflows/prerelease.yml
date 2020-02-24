@@ -23,7 +23,5 @@ jobs:
         run: 'npm publish --tag next'
       - name: Publish pre-release of @manifoldco/mui-core-types 🤫
         run: |
-          ls -l ./dist/types/v*
           cp -r ./dist/types/v* ./mui-core-types/
-          ls -l ./mui-core-types 
           npm publish mui-core-types/ --tag next
