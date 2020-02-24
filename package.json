@@ -10,6 +10,9 @@
   "bugs": {
     "url": "https://github.com/manifoldco/ui/issues"
   },
+  "files": [
+    "dist/"
+  ],
   "version": "0.0.1-test.1",
   "description": "Manifold UI Core",
   "main": "dist/index.js",

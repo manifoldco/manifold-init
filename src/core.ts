@@ -4,6 +4,7 @@ const getConnection = (e: CustomEvent<InitDetail>) => {
   const { version } = e.detail;
 
   switch (version) {
+    case undefined: // latest
     case 0:
       return connection(e);
     default:

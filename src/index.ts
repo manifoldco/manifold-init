@@ -1,3 +1,3 @@
-import './initialize';
+import './core';
 
 export * from './components';
