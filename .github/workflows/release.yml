@@ -21,3 +21,7 @@ jobs:
         run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
       - name: Publish new release of @manifoldco/mui-core 🚀
         run: 'npm publish --tag latest'
+      - name: Copy types
+        run: cp -r ./dist/types/v* ./mui-core-types/
+      - name: Publish pre-release of @manifoldco/mui-core-types 🤫
+        run: 'npm publish mui-core-types/ --tag latest'
