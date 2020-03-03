@@ -25,3 +25,74 @@ jobs:
         run: |
           cp -r ./dist/types/v* ./mui-core-types/
           npm publish mui-core-types/ --tag next
+  cdn:
+    env:
+      BUCKET: manifold-js
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      PACKAGE: '@manifoldco/mui-core' # package name
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [13.x]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          export_default_credentials: true
+      - run: npm install
+      - run: npm run build
+      # Manually specify all files/folders to copy over (for reference see .npmignore)
+      - run:
+          gsutil -m cp ${GITHUB_WORKSPACE}/LICENSE
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}/LICENSE
+      - run:
+          gsutil -m cp ${GITHUB_WORKSPACE}/README.md
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}/README.md
+      - run:
+          gsutil -m cp ${GITHUB_WORKSPACE}/package.json
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}/package.json
+      - run:
+          gsutil -m cp -r ${GITHUB_WORKSPACE}/dist
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}
+      - run:
+          gsutil -m cp -r ${GITHUB_WORKSPACE}/loader
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}
+      # Note: DON’T publish a prerelease to the main folder like we would with a release!
+  cdn-types:
+    env:
+      BUCKET: manifold-js
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      PACKAGE: '@manifoldco/mui-core-types' # package name
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [13.x]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          export_default_credentials: true
+      - run: npm install
+      - run: npm run build
+      # Manually specify all files/folders to copy over (for reference see .npmignore)
+      - run:
+          gsutil -m cp ${GITHUB_WORKSPACE}/LICENSE
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}/LICENSE
+      - run:
+          gsutil -m cp ${GITHUB_WORKSPACE}/README.md
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}/README.md
+      - run:
+          gsutil -m cp ${GITHUB_WORKSPACE}/package.json
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}/package.json
+      - run:
+          # copy types only
+          gsutil -m cp -r ${GITHUB_WORKSPACE}/dist/types/v*
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}
+      - run:
+          gsutil -m cp -r ${GITHUB_WORKSPACE}/loader
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}
+      # Note: DON’T publish a prerelease to the main folder like we would with a release!
