@@ -11,6 +11,11 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 export namespace Components {
   interface ConnectedButton {}
+  interface MuiCore {
+    'authToken'?: string;
+    'authType'?: 'manual' | 'oauth';
+    'env'?: 'stage' | 'prod';
+  }
 }
 
 declare global {
@@ -21,16 +26,29 @@ declare global {
     prototype: HTMLConnectedButtonElement;
     new (): HTMLConnectedButtonElement;
   };
+
+  interface HTMLMuiCoreElement extends Components.MuiCore, HTMLStencilElement {}
+  var HTMLMuiCoreElement: {
+    prototype: HTMLMuiCoreElement;
+    new (): HTMLMuiCoreElement;
+  };
   interface HTMLElementTagNameMap {
     'connected-button': HTMLConnectedButtonElement;
+    'mui-core': HTMLMuiCoreElement;
   }
 }
 
 declare namespace LocalJSX {
   interface ConnectedButton {}
+  interface MuiCore {
+    'authToken'?: string;
+    'authType'?: 'manual' | 'oauth';
+    'env'?: 'stage' | 'prod';
+  }
 
   interface IntrinsicElements {
     'connected-button': ConnectedButton;
+    'mui-core': MuiCore;
   }
 }
 
@@ -41,6 +59,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'connected-button': LocalJSX.ConnectedButton & JSXBase.HTMLAttributes<HTMLConnectedButtonElement>;
+      'mui-core': LocalJSX.MuiCore & JSXBase.HTMLAttributes<HTMLMuiCoreElement>;
     }
   }
 }
