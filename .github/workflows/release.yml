@@ -63,7 +63,7 @@ jobs:
       - run: gsutil -m cp ${GITHUB_WORKSPACE}/LICENSE gs://${BUCKET}/${PACKAGE}/LICENSE # overwrite these files
       - run: gsutil -m cp ${GITHUB_WORKSPACE}/README.md gs://${BUCKET}/${PACKAGE}/README.md
       - run: gsutil -m cp ${GITHUB_WORKSPACE}/package.json gs://${BUCKET}/${PACKAGE}/package.json
-      # - run: gsutil -m rm -rf gs://${BUCKET}/${PACKAGE}/dist # remove /dist and /loader contents so no cruft remains from previous version
-      # - run: gsutil -m rm -rf gs://${BUCKET}/${PACKAGE}/loader
+      - run: gsutil -m rm -rf gs://${BUCKET}/${PACKAGE}/dist # remove /dist and /loader contents so no cruft remains from previous version
+      - run: gsutil -m rm -rf gs://${BUCKET}/${PACKAGE}/loader
       - run: gsutil -m cp -r ${GITHUB_WORKSPACE}/dist gs://${BUCKET}/${PACKAGE} # copy /dist and /loader folders
       - run: gsutil -m cp -r ${GITHUB_WORKSPACE}/loader gs://${BUCKET}/${PACKAGE}
