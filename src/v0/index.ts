@@ -18,7 +18,7 @@ export interface InitDetail {
   componentVersion: string;
 }
 
-const connection = (e: CustomEvent<InitDetail>) => {
+const connection = (e: CustomEvent<InitDetail>, options: { env: 'stage' | 'prod' }) => {
   const { componentVersion } = e.detail;
   const element = e.target as HTMLElement;
 
@@ -26,6 +26,10 @@ const connection = (e: CustomEvent<InitDetail>) => {
     graphqlFetch: createGraphqlFetch({
       element,
       version: componentVersion,
+      endpoint: () =>
+        options.env === 'stage'
+          ? 'https://api.stage.manifold.co/graphql'
+          : 'https://api.manifold.co/graphql',
     }),
     track,
   };
