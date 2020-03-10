@@ -15,7 +15,7 @@ const connection = (options: {
   env: 'stage' | 'prod';
   element: HTMLElement;
   componentVersion: string;
-}) => {
+}): Connection => {
   const { componentVersion, element, env } = options;
 
   return {
