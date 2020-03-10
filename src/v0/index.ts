@@ -11,23 +11,19 @@ export interface Connection {
   track: (event: string) => void;
 }
 
-export interface InitDetail {
-  resolve: (connection: Connection) => void;
-  reject: (error: Error) => void;
-  version: 0;
+const connection = (options: {
+  env: 'stage' | 'prod';
+  element: HTMLElement;
   componentVersion: string;
-}
-
-const connection = (e: CustomEvent<InitDetail>, options: { env: 'stage' | 'prod' }) => {
-  const { componentVersion } = e.detail;
-  const element = e.target as HTMLElement;
+}) => {
+  const { componentVersion, element, env } = options;
 
   return {
     graphqlFetch: createGraphqlFetch({
       element,
       version: componentVersion,
       endpoint: () =>
-        options.env === 'stage'
+        env === 'stage'
           ? 'https://api.stage.manifold.co/graphql'
           : 'https://api.manifold.co/graphql',
     }),

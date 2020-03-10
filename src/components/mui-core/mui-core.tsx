@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, Method } from '@stencil/core';
 import { initialize } from '../../core';
 
 @Component({
@@ -9,8 +9,17 @@ export class ConnectedButton {
   @Prop() authToken?: string;
   @Prop() authType?: 'manual' | 'oauth' = 'oauth';
 
-  componentWillLoad() {
-    initialize({ env: this.env, authToken: this.authToken, authType: this.authType });
+  @Method()
+  async initialize(options: { element: HTMLElement; componentVersion: string; version: number }) {
+    const { version, componentVersion, element } = options;
+    return initialize({
+      env: this.env,
+      authToken: this.authToken,
+      authType: this.authType,
+      version,
+      componentVersion,
+      element,
+    });
   }
 
   render() {

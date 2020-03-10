@@ -15,6 +15,7 @@ export namespace Components {
     'authToken'?: string;
     'authType'?: 'manual' | 'oauth';
     'env'?: 'stage' | 'prod';
+    'initialize': (options: { element: HTMLElement; componentVersion: string; version: number; }) => Promise<{ graphqlFetch: import("/home/sam/mui-core/src/v0/graphqlFetch").GraphqlFetch; track: (data: any) => void; }>;
   }
 }
 
