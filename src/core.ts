@@ -1,4 +1,4 @@
-import connection from './v0';
+import connection, { Connection as Connection_v0 } from './v0';
 
 interface InitOptions {
   authType?: 'manual' | 'oauth';
@@ -27,6 +27,6 @@ const getConnection = (options: InitOptions) => {
   }
 };
 
-export function initialize(options: InitOptions) {
+export function initialize(options: InitOptions): Connection_v0 {
   return getConnection(options);
 }
