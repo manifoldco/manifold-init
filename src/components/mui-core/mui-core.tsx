@@ -8,7 +8,7 @@ export interface Connection extends core.Connection {
 @Component({
   tag: 'mui-core',
 })
-export class ConnectedButton {
+export class MuiCore {
   @Prop() env?: 'stage' | 'prod' = 'prod';
   @Prop() authToken?: string;
   @Prop() authType?: 'manual' | 'oauth' = 'oauth';
