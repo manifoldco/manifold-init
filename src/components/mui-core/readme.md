@@ -10,8 +10,8 @@
 | Property    | Attribute    | Description | Type                  | Default     |
 | ----------- | ------------ | ----------- | --------------------- | ----------- |
 | `authToken` | `auth-token` |             | `string`              | `undefined` |
-| `authType`  | `auth-type`  |             | `"manual" or "oauth"` | `'oauth'`   |
-| `env`       | `env`        |             | `"prod" or "stage"`   | `'prod'`    |
+| `authType`  | `auth-type`  |             | `"manual" \| "oauth"` | `'oauth'`   |
+| `env`       | `env`        |             | `"prod" \| "stage"`   | `'prod'`    |
 
 
 ## Methods
