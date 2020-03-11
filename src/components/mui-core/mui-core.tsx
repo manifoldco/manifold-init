@@ -1,5 +1,9 @@
 import { Component, Prop, Method } from '@stencil/core';
-import { initialize } from '../../core';
+import * as core from '../../core';
+
+export interface Connection extends core.Connection {
+  hack?: true;
+}
 
 @Component({
   tag: 'mui-core',
@@ -10,9 +14,13 @@ export class ConnectedButton {
   @Prop() authType?: 'manual' | 'oauth' = 'oauth';
 
   @Method()
-  async initialize(options: { element: HTMLElement; componentVersion: string; version: number }) {
+  async initialize(options: {
+    element: HTMLElement;
+    componentVersion: string;
+    version: number;
+  }): Promise<Connection> {
     const { version, componentVersion, element } = options;
-    return initialize({
+    return core.initialize({
       env: this.env,
       authToken: this.authToken,
       authType: this.authType,

@@ -5,7 +5,7 @@ import { Connection } from '../../v0';
   tag: 'connected-button',
 })
 export class ConnectedButton {
-  @Element() el: HTMLConnectedButtonElement;
+  @Element() el: HTMLElement;
   @State() success?: string;
   @State() badRequest?: string;
   @State() unauthenticated?: string;

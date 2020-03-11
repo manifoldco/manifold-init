@@ -27,6 +27,8 @@ const getConnection = (options: InitOptions) => {
   }
 };
 
-export function initialize(options: InitOptions): Connection_v0 {
+export type Connection = Connection_v0;
+
+export function initialize(options: InitOptions): Connection {
   return getConnection(options);
 }
