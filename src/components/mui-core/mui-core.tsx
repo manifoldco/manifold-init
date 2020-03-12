@@ -1,9 +1,8 @@
 import { Component, Prop, Method } from '@stencil/core';
 import * as core from '../../core';
 
-export interface Connection extends core.Connection {
-  hack?: true;
-}
+/* eslint-disable-next-line @typescript-eslint/no-empty-interface */
+export interface Connection extends core.Connection {}
 
 @Component({
   tag: 'mui-core',
