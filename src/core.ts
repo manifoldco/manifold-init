@@ -1,19 +1,24 @@
-import connection, { InitDetail } from './v0';
+import connection, { Connection as Connection_v0 } from './v0';
 
 interface InitOptions {
   authType?: 'manual' | 'oauth';
   env?: 'stage' | 'prod';
   authToken?: string;
+  componentVersion: string;
+  version: number;
+  element: HTMLElement;
 }
 
-const getConnection = (e: CustomEvent<InitDetail>, options: InitOptions) => {
-  const { version } = e.detail;
+const getConnection = (options: InitOptions) => {
+  const { version, element, env, componentVersion } = options;
 
   switch (version) {
     case undefined: // latest
     case 0:
-      return connection(e, {
-        env: options.env,
+      return connection({
+        env,
+        element,
+        componentVersion,
       });
     default:
       throw new Error(
@@ -22,14 +27,8 @@ const getConnection = (e: CustomEvent<InitDetail>, options: InitOptions) => {
   }
 };
 
-const onInitialize = (options: InitOptions) => (e: CustomEvent<InitDetail>) => {
-  try {
-    e.detail.resolve(getConnection(e, options));
-  } catch (error) {
-    e.detail.reject(error);
-  }
-};
+export type Connection = Connection_v0;
 
-export function initialize(options: InitOptions) {
-  document.addEventListener('mui-initialize', onInitialize(options));
+export function initialize(options: InitOptions): Connection {
+  return getConnection(options);
 }

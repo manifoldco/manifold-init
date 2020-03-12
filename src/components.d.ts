@@ -7,7 +7,9 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-
+import {
+  Connection,
+} from './components/mui-core/mui-core';
 
 export namespace Components {
   interface ConnectedButton {}
@@ -15,6 +17,7 @@ export namespace Components {
     'authToken'?: string;
     'authType'?: 'manual' | 'oauth';
     'env'?: 'stage' | 'prod';
+    'initialize': (options: { element: HTMLElement; componentVersion: string; version: number; }) => Promise<Connection>;
   }
 }
 

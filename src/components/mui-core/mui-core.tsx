@@ -1,16 +1,32 @@
-import { Component, Prop } from '@stencil/core';
-import { initialize } from '../../core';
+import { Component, Prop, Method } from '@stencil/core';
+import * as core from '../../core';
+
+/* eslint-disable-next-line @typescript-eslint/no-empty-interface */
+export interface Connection extends core.Connection {}
 
 @Component({
   tag: 'mui-core',
 })
-export class ConnectedButton {
+export class MuiCore {
   @Prop() env?: 'stage' | 'prod' = 'prod';
   @Prop() authToken?: string;
   @Prop() authType?: 'manual' | 'oauth' = 'oauth';
 
-  componentWillLoad() {
-    initialize({ env: this.env, authToken: this.authToken, authType: this.authType });
+  @Method()
+  async initialize(options: {
+    element: HTMLElement;
+    componentVersion: string;
+    version: number;
+  }): Promise<Connection> {
+    const { version, componentVersion, element } = options;
+    return core.initialize({
+      env: this.env,
+      authToken: this.authToken,
+      authType: this.authType,
+      version,
+      componentVersion,
+      element,
+    });
   }
 
   render() {

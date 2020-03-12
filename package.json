@@ -11,7 +11,8 @@
     "url": "https://github.com/manifoldco/ui/issues"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "loader/"
   ],
   "version": "0.0.1-next.26",
   "description": "Manifold UI Core",

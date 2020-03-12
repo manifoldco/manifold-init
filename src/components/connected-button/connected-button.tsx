@@ -1,34 +1,23 @@
 import { Component, Element, State, h } from '@stencil/core';
-import { HTMLStencilElement } from '@stencil/core/internal';
 import { Connection } from '../../v0';
-
-function initialize(el: HTMLStencilElement): Promise<Connection> {
-  return new Promise((resolve, reject) => {
-    el.dispatchEvent(
-      new CustomEvent('mui-initialize', {
-        bubbles: true,
-        detail: {
-          resolve,
-          reject,
-          version: 0,
-          componentVersion: '<@NPM_PACKAGE_VERSION@>',
-        },
-      })
-    );
-  });
-}
 
 @Component({
   tag: 'connected-button',
 })
 export class ConnectedButton {
-  @Element() el: HTMLConnectedButtonElement;
+  @Element() el: HTMLElement;
   @State() success?: string;
   @State() badRequest?: string;
   @State() unauthenticated?: string;
   connection: Connection;
   async componentWillLoad() {
-    this.connection = await initialize(this.el);
+    await customElements.whenDefined('mui-core');
+    const core = document.querySelector('mui-core') as HTMLMuiCoreElement;
+    this.connection = await core.initialize({
+      element: this.el,
+      version: 0,
+      componentVersion: '<@NPM_PACKAGE_VERSION@>',
+    });
   }
   getDataSuccess = async () => {
     const response = await this.connection.graphqlFetch({
