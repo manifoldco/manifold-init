@@ -4,13 +4,14 @@ interface InitOptions {
   authType?: 'manual' | 'oauth';
   env?: 'stage' | 'prod';
   authToken?: string;
+  clientId?: string;
   componentVersion: string;
   version: number;
   element: HTMLElement;
 }
 
 const getConnection = (options: InitOptions) => {
-  const { version, element, env, componentVersion } = options;
+  const { version, element, env, componentVersion, clientId } = options;
 
   switch (version) {
     case undefined: // latest
@@ -19,6 +20,7 @@ const getConnection = (options: InitOptions) => {
         env,
         element,
         componentVersion,
+        clientId,
       });
     default:
       throw new Error(
