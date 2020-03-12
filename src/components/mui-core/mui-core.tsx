@@ -17,8 +17,9 @@ export class MuiCore {
     element: HTMLElement;
     componentVersion: string;
     version: number;
+    clientId?: string;
   }): Promise<Connection> {
-    const { version, componentVersion, element } = options;
+    const { version, componentVersion, element, clientId } = options;
     return core.initialize({
       env: this.env,
       authToken: this.authToken,
@@ -26,6 +27,7 @@ export class MuiCore {
       version,
       componentVersion,
       element,
+      clientId,
     });
   }
 

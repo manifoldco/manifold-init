@@ -17,7 +17,7 @@ export namespace Components {
     'authToken'?: string;
     'authType'?: 'manual' | 'oauth';
     'env'?: 'stage' | 'prod';
-    'initialize': (options: { element: HTMLElement; componentVersion: string; version: number; }) => Promise<Connection>;
+    'initialize': (options: { element: HTMLElement; componentVersion: string; version: number; clientId?: string; }) => Promise<Connection>;
   }
 }
 
