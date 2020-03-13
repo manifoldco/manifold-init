@@ -28,7 +28,7 @@ if (version) {
 
   // types package
   {
-    const pkgJSON = path.resolve(__dirname, '..', 'mui-core-types', 'package.json');
+    const pkgJSON = path.resolve(__dirname, '..', 'manifold-init-types', 'package.json');
     const pkgManifest = JSON.parse(fs.readFileSync(pkgJSON, 'utf8'));
     pkgManifest.version = version;
     fs.writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2).concat('\n'), 'utf8');

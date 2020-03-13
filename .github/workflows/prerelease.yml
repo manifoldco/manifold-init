@@ -19,17 +19,17 @@ jobs:
         run: npm run build
       - name: Set registry
         run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
-      - name: Publish pre-release of @manifoldco/mui-core 🤫
+      - name: Publish pre-release of @manifoldco/manifold-init 🤫
         run: 'npm publish --tag next'
-      - name: Publish pre-release of @manifoldco/mui-core-types 🤫
+      - name: Publish pre-release of @manifoldco/manifold-init-types 🤫
         run: |
-          cp -r ./dist/types ./mui-core-types/
-          npm publish mui-core-types/ --tag next
+          cp -r ./dist/types ./manifold-init-types/
+          npm publish manifold-init-types/ --tag next
   cdn:
     env:
       BUCKET: manifold-js
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-      PACKAGE: '@manifoldco/mui-core' # package name
+      PACKAGE: '@manifoldco/manifold-init' # package name
     runs-on: ubuntu-latest
     strategy:
       matrix:

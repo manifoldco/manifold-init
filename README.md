@@ -1,1 +1,1 @@
-# Manifold UI Core (`mui-core`)
+# Manifold UI Initialization (`manifold-init`)

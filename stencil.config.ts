@@ -5,7 +5,7 @@ import { Config } from '@stencil/core';
 const pkgManifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
 export const config: Config = {
-  namespace: 'mui-core',
+  namespace: 'manifold-init',
   outputTargets: [
     {
       type: 'dist',

@@ -69,7 +69,7 @@ export function createGraphqlFetch({
       Connection: 'keep-alive',
       'Content-type': 'application/json',
       'x-mui-component': `${element.tagName}@${version}`,
-      'x-manifold-mui-core-version': '<@NPM_PACKAGE_VERSION@>',
+      'x-manifold-manifold-init-version': '<@NPM_PACKAGE_VERSION@>',
     },
   };
 
