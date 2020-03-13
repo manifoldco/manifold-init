@@ -9,15 +9,16 @@
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   Connection,
-} from './components/mui-core/mui-core';
+} from './components/manifold-init/manifold-init';
 
 export namespace Components {
   interface ConnectedButton {}
-  interface MuiCore {
+  interface ManifoldInit {
     'authToken'?: string;
     'authType'?: 'manual' | 'oauth';
+    'clientId'?: string;
     'env'?: 'stage' | 'prod';
-    'initialize': (options: { element: HTMLElement; componentVersion: string; version: number; clientId?: string; }) => Promise<Connection>;
+    'initialize': (options: { element: HTMLElement; componentVersion: string; version: number; }) => Promise<Connection>;
   }
 }
 
@@ -30,28 +31,29 @@ declare global {
     new (): HTMLConnectedButtonElement;
   };
 
-  interface HTMLMuiCoreElement extends Components.MuiCore, HTMLStencilElement {}
-  var HTMLMuiCoreElement: {
-    prototype: HTMLMuiCoreElement;
-    new (): HTMLMuiCoreElement;
+  interface HTMLManifoldInitElement extends Components.ManifoldInit, HTMLStencilElement {}
+  var HTMLManifoldInitElement: {
+    prototype: HTMLManifoldInitElement;
+    new (): HTMLManifoldInitElement;
   };
   interface HTMLElementTagNameMap {
     'connected-button': HTMLConnectedButtonElement;
-    'mui-core': HTMLMuiCoreElement;
+    'manifold-init': HTMLManifoldInitElement;
   }
 }
 
 declare namespace LocalJSX {
   interface ConnectedButton {}
-  interface MuiCore {
+  interface ManifoldInit {
     'authToken'?: string;
     'authType'?: 'manual' | 'oauth';
+    'clientId'?: string;
     'env'?: 'stage' | 'prod';
   }
 
   interface IntrinsicElements {
     'connected-button': ConnectedButton;
-    'mui-core': MuiCore;
+    'manifold-init': ManifoldInit;
   }
 }
 
@@ -62,7 +64,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'connected-button': LocalJSX.ConnectedButton & JSXBase.HTMLAttributes<HTMLConnectedButtonElement>;
-      'mui-core': LocalJSX.MuiCore & JSXBase.HTMLAttributes<HTMLMuiCoreElement>;
+      'manifold-init': LocalJSX.ManifoldInit & JSXBase.HTMLAttributes<HTMLManifoldInitElement>;
     }
   }
 }
