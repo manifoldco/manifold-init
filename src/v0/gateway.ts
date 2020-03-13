@@ -14,8 +14,8 @@ export interface Gateway {
 }
 
 export function createGateway({
-  gatewayUrl = () => 'https://api.manifold.co/v1',
   retries = 3,
+  gatewayUrl = () => 'https://api.manifold.co/v1',
 }: CreateGatewayFetch): Gateway {
   async function post<Body extends {}, Return>(
     path: string,
@@ -46,7 +46,7 @@ export function createGateway({
     }
 
     // Immediately reject on internal server error.
-    const internalServerError = response.status > 500;
+    const internalServerError = response.status === 500;
     if (internalServerError) {
       return Promise.reject(
         new ManifoldError({ type: ErrorType.ServerError, message: response.statusText })

@@ -98,7 +98,7 @@ export function createGraphqlFetch({
     }
 
     // Immediately reject on internal server error.
-    const internalServerError = response.status > 500;
+    const internalServerError = response.status === 500;
     if (internalServerError) {
       return Promise.reject(
         new ManifoldError({ type: ErrorType.ServerError, message: response.statusText })
