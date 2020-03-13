@@ -6,8 +6,6 @@ function wait(ms) {
 
 interface CreateGatewayFetch {
   gatewayUrl?: () => string;
-  element: HTMLElement;
-  version: string;
   retries?: number;
 }
 
@@ -16,8 +14,6 @@ export interface Gateway {
 }
 
 export function createGateway({
-  element,
-  version,
   gatewayUrl = () => 'https://api.manifold.co/v1',
   retries = 3,
 }: CreateGatewayFetch): Gateway {
@@ -32,8 +28,6 @@ export function createGateway({
       headers: {
         Connection: 'keep-alive',
         'Content-type': 'application/json',
-        'x-mui-component': `${element.tagName}@${version}`,
-        'x-manifold-mui-core-version': '<@NPM_PACKAGE_VERSION@>',
       },
     };
     const canRetry = attempts < retries;

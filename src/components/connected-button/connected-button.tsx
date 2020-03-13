@@ -9,6 +9,8 @@ export class ConnectedButton {
   @State() success?: string;
   @State() badRequest?: string;
   @State() unauthenticated?: string;
+  @State() planCost: string;
+
   connection: Connection;
   async componentWillLoad() {
     await customElements.whenDefined('mui-core');
@@ -40,6 +42,15 @@ export class ConnectedButton {
     this.unauthenticated = JSON.stringify(response, null, 2);
   };
 
+  getPlanCost = async () => {
+    const planID = '235exy25wvzpxj52p87bh87gbnj4y';
+    const selection = { backups: 1, instance_class: 'db.t2.micro', redundancy: false, storage: 5 };
+    const response = await this.connection.gateway.post(`/id/plan/${planID}/cost`, {
+      features: selection,
+    });
+    this.planCost = JSON.stringify(response);
+  };
+
   render() {
     return (
       <div>
@@ -67,6 +78,15 @@ export class ConnectedButton {
         {this.unauthenticated && (
           <p>
             Response: <pre>{this.unauthenticated}</pre>
+          </p>
+        )}
+        <hr />
+        <button type="button" onClick={this.getPlanCost}>
+          Send (plan cost)
+        </button>
+        {this.planCost && (
+          <p>
+            Response: <pre>{this.planCost}</pre>
           </p>
         )}
       </div>
