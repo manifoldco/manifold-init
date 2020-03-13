@@ -5,21 +5,21 @@ import * as core from '../../core';
 export interface Connection extends core.Connection {}
 
 @Component({
-  tag: 'mui-core',
+  tag: 'manifold-init',
 })
-export class MuiCore {
+export class ManifoldInit {
   @Prop() env?: 'stage' | 'prod' = 'prod';
   @Prop() authToken?: string;
   @Prop() authType?: 'manual' | 'oauth' = 'oauth';
+  @Prop() clientId?: string;
 
   @Method()
   async initialize(options: {
     element: HTMLElement;
     componentVersion: string;
     version: number;
-    clientId?: string;
   }): Promise<Connection> {
-    const { version, componentVersion, element, clientId } = options;
+    const { version, componentVersion, element } = options;
     return core.initialize({
       env: this.env,
       authToken: this.authToken,
@@ -27,7 +27,7 @@ export class MuiCore {
       version,
       componentVersion,
       element,
-      clientId,
+      clientId: this.clientId,
     });
   }
 

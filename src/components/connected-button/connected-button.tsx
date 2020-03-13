@@ -11,8 +11,8 @@ export class ConnectedButton {
   @State() unauthenticated?: string;
   connection: Connection;
   async componentWillLoad() {
-    await customElements.whenDefined('mui-core');
-    const core = document.querySelector('mui-core') as HTMLMuiCoreElement;
+    await customElements.whenDefined('manifold-init');
+    const core = document.querySelector<HTMLManifoldInitElement>('manifold-init');
     this.connection = await core.initialize({
       element: this.el,
       version: 0,
