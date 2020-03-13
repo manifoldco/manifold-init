@@ -23,6 +23,7 @@ const connection = (options: {
 
   return {
     gateway: createGateway({
+      retries: 3,
       gatewayUrl: () =>
         env === 'stage' ? 'https://api.stage.manifold.co/v1' : 'https://api.manifold.co/v1',
     }),
