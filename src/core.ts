@@ -24,7 +24,7 @@ const getConnection = (options: InitOptions) => {
       });
     default:
       throw new Error(
-        `Version ${version} doesn't exist. Ensure you have the latest release of mui-core.`
+        `Version ${version} doesn't exist. Ensure you have the latest release of manifold-init.`
       );
   }
 };

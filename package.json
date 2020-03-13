@@ -1,14 +1,14 @@
 {
-  "name": "@manifoldco/mui-core",
+  "name": "@manifoldco/manifold-init",
   "author": "manifoldco",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/manifoldco/mui-core.git"
+    "url": "git+https://github.com/manifoldco/manifold-init.git"
   },
-  "homepage": "https://github.com/manifoldco/ui",
+  "homepage": "https://github.com/manifoldco/manifold-init",
   "bugs": {
-    "url": "https://github.com/manifoldco/ui/issues"
+    "url": "https://github.com/manifoldco/manifold-init/issues"
   },
   "files": [
     "dist/",
@@ -16,7 +16,7 @@
     "src/"
   ],
   "version": "0.0.1-next.26",
-  "description": "Manifold UI Core",
+  "description": "Manifold UI Initialization",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "es2015": "dist/esm/index.mjs",
@@ -24,7 +24,7 @@
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/mui-core/mui-core.js",
+  "unpkg": "dist/manifold-init/manifold-init.js",
   "scripts": {
     "build": "stencil build",
     "bundlesize": "npm run build && npx bundlesize",
@@ -43,7 +43,7 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/mui-core/index.esm.js",
+      "path": "./dist/manifold-init/index.esm.js",
       "maxSize": "5 kB",
       "compression": "none"
     }

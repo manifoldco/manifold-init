@@ -1,0 +1,8 @@
+{
+  "name": "@manifoldco/manifold-init-types",
+  "version": "0.0.1-next.26",
+  "private": false,
+  "description": "TypeScript types for manifold-init",
+  "author": "manifoldco",
+  "license": "MIT"
+}
