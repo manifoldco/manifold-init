@@ -24,7 +24,7 @@ jobs:
       - name: Copy types
         run: cp -r ./dist/types ./manifold-init-types/
       - name: Publish pre-release of @manifoldco/manifold-init-types 🤫
-        run: 'npm publish manifold-init-types/ --tag latest'
+        run: 'npm publish manifold-init-types/ --tag latest --access public'
   cdn:
     env:
       BUCKET: manifold-js
