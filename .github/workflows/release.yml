@@ -20,7 +20,7 @@ jobs:
       - name: Set registry
         run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
       - name: Publish new release of @manifoldco/manifold-init 🚀
-        run: 'npm publish --tag latest'
+        run: 'npm publish --tag latest --access public'
       - name: Copy types
         run: cp -r ./dist/types ./manifold-init-types/
       - name: Publish pre-release of @manifoldco/manifold-init-types 🤫
