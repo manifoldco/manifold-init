@@ -1,4 +1,5 @@
 import { createGraphqlFetch, GraphqlFetch } from './graphqlFetch';
+import { createGateway, Gateway } from './gateway';
 
 // TODO add real tracking
 const track = data => {
@@ -8,6 +9,7 @@ const track = data => {
 
 export interface Connection {
   graphqlFetch: GraphqlFetch;
+  gateway: Gateway;
   track: (event: string) => void;
 }
 
@@ -20,6 +22,10 @@ const connection = (options: {
   const { componentVersion, element, env, clientId } = options;
 
   return {
+    gateway: createGateway({
+      baseUrl: () =>
+        env === 'stage' ? 'https://api.stage.manifold.co/v1' : 'https://api.manifold.co/v1',
+    }),
     graphqlFetch: createGraphqlFetch({
       element,
       version: componentVersion,
