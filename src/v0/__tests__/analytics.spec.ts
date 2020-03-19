@@ -91,10 +91,11 @@ describe('analytics', () => {
     });
 
     it('metric', async () => {
+      const componentVersion = '1.2.3';
       const analytics = createAnalytics({
         env: 'prod',
         element: document.createElement('manifold-product'),
-        componentVersion: '1.2.3',
+        componentVersion,
       });
       await analytics.track(metric);
       const res = fetchMock.calls()[0][1];
@@ -104,16 +105,18 @@ describe('analytics', () => {
         properties: {
           ...metric.properties,
           componentName: 'MANIFOLD-PRODUCT',
+          version: componentVersion,
           duration: '123', // numbers should submit as strings
         },
       });
     });
 
     it('track', async () => {
+      const componentVersion = '1.2.3';
       const analytics = createAnalytics({
         env: 'prod',
         element: document.createElement('manifold-product'),
-        componentVersion: '1.2.3',
+        componentVersion,
       });
       await analytics.track(track);
       const res = fetchMock.calls()[0][1];
@@ -123,6 +126,7 @@ describe('analytics', () => {
         properties: {
           ...track.properties,
           componentName: 'MANIFOLD-PRODUCT',
+          version: componentVersion,
           planId: '1234', // numbers should submit as strings
         },
       });

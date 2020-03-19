@@ -95,7 +95,11 @@ export default function createAnalytics(args: CreateAnalytics) {
       source: args.element.tagName,
       properties: Object.entries(evt.properties).reduce(
         (properties, [key, value]) => ({ ...properties, [key]: `${value}` }),
-        { componentName: args.element.tagName }
+        {
+          componentName: args.element.tagName,
+          version: args.componentVersion,
+          clientId: args.clientId,
+        }
       ),
     };
   }
