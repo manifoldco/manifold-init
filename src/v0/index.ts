@@ -1,20 +1,18 @@
+import createAnalytics, { AnalyticsEvent, ErrorDetail } from './analytics';
 import { createGraphqlFetch, GraphqlFetch } from './graphqlFetch';
 import { createGateway, Gateway } from './gateway';
-
-// TODO add real tracking
-const track = data => {
-  // eslint-disable-next-line no-console
-  console.log(data);
-};
 
 export interface Connection {
   graphqlFetch: GraphqlFetch;
   gateway: Gateway;
-  track: (event: string) => void;
+  analytics: {
+    track: (e: AnalyticsEvent) => Promise<Response>;
+    report: (detail: ErrorDetail) => void;
+  };
 }
 
 const connection = (options: {
-  env: 'stage' | 'prod';
+  env: 'stage' | 'prod' | 'local';
   element: HTMLElement;
   componentVersion: string;
   clientId?: string;
@@ -23,19 +21,33 @@ const connection = (options: {
 
   return {
     gateway: createGateway({
-      baseUrl: () =>
-        env === 'stage' ? 'https://api.stage.manifold.co/v1' : 'https://api.manifold.co/v1',
+      baseUrl: () => {
+        switch (env) {
+          case 'stage':
+            return 'https://api.stage.manifold.co/v1';
+          case 'local':
+            return 'https://api.arigato.tools/v1';
+          default:
+            return 'https://api.manifold.co/v1';
+        }
+      },
     }),
     graphqlFetch: createGraphqlFetch({
       element,
       version: componentVersion,
       clientId,
-      endpoint: () =>
-        env === 'stage'
-          ? 'https://api.stage.manifold.co/graphql'
-          : 'https://api.manifold.co/graphql',
+      endpoint: () => {
+        switch (env) {
+          case 'stage':
+            return 'https://api.stage.manifold.co/graphql';
+          case 'local':
+            return 'https://api.arigato.tools/graphql';
+          default:
+            return 'https://api.manifold.co/graphql';
+        }
+      },
     }),
-    track,
+    analytics: createAnalytics({ env, element, componentVersion, clientId }),
   };
 };
 

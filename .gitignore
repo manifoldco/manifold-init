@@ -30,3 +30,5 @@ www/
 $RECYCLE.BIN/
 
 .npmrc
+
+manifold-init-types/types/
