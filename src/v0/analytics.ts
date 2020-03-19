@@ -62,6 +62,8 @@ export interface ErrorEvent extends SharedProperties {
   properties: {
     code: string;
     message: string;
+    version: string;
+    clientId?: string;
   };
 }
 

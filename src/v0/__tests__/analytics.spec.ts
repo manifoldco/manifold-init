@@ -17,7 +17,9 @@ const error: ErrorEvent = {
   name: 'mui-pricing-matrix_error',
   properties: {
     code: 'code',
+    version: '1.2.3',
     message: 'message',
+    clientId: '123',
   },
 };
 const track: AnalyticsEvent = {
