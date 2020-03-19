@@ -47,7 +47,7 @@ const connection = (options: {
         }
       },
     }),
-    analytics: createAnalytics({ env, element, componentVersion }),
+    analytics: createAnalytics({ env, element, componentVersion, clientId }),
   };
 };
 

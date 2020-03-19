@@ -15,7 +15,7 @@
     "loader/",
     "src/"
   ],
-  "version": "0.0.1-next.26",
+  "version": "0.4.0-beta.0",
   "description": "Manifold UI Initialization",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
