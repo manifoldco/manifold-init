@@ -16,6 +16,9 @@ describe('graphqlFetch', () => {
     it('defaults to api.manifold.co/graphql', async () => {
       const fetcher = createGraphqlFetch({
         element: document.createElement('custom-element'),
+        getAuthToken: () => undefined,
+        clearAuthToken: () => {},
+        analytics: { track: jest.fn(), report: jest.fn() },
         version: 'version',
       });
       fetchMock.mock('https://api.manifold.co/graphql', {
@@ -34,6 +37,9 @@ describe('graphqlFetch', () => {
       };
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
+        getAuthToken: () => undefined,
+        clearAuthToken: () => {},
+        analytics: { track: jest.fn(), report: jest.fn() },
         element: document.createElement('custom-element'),
         version: 'test',
       });
@@ -55,6 +61,9 @@ describe('graphqlFetch', () => {
       const err = new ManifoldError({ type: ErrorType.NetworkError });
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
+        getAuthToken: () => undefined,
+        clearAuthToken: () => {},
+        analytics: { track: jest.fn(), report: jest.fn() },
         element: document.createElement('custom-element'),
         version: 'test',
       });
@@ -78,6 +87,9 @@ describe('graphqlFetch', () => {
       fetchMock.mock(graphqlEndpoint, { data: {} });
       const fetcher = createGraphqlFetch({
         endpoint: () => graphqlEndpoint,
+        getAuthToken: () => undefined,
+        clearAuthToken: () => {},
+        analytics: { track: jest.fn(), report: jest.fn() },
         version,
         element,
       });
