@@ -16,9 +16,10 @@ const connection = (options: {
   element: HTMLElement;
   componentVersion: string;
   clientId?: string;
-  getAuthToken: () => string;
+  getAuthToken: () => string | undefined;
+  clearAuthToken: () => void;
 }): Connection => {
-  const { componentVersion, element, env, clientId, getAuthToken } = options;
+  const { componentVersion, element, env, clientId, getAuthToken, clearAuthToken } = options;
 
   const analytics = createAnalytics({ env, element, componentVersion, clientId });
 
@@ -39,6 +40,7 @@ const connection = (options: {
       element,
       version: componentVersion,
       getAuthToken,
+      clearAuthToken,
       clientId,
       analytics,
       endpoint: () => {

@@ -27,6 +27,7 @@ const findAuthError = (errors: GraphqlError[] = []) =>
 interface CreateGraphqlFetch {
   endpoint?: () => string;
   getAuthToken: () => string | undefined;
+  clearAuthToken: () => void;
   clientId?: string;
   element: HTMLElement;
   version: string;
@@ -64,6 +65,7 @@ export function createGraphqlFetch({
   element,
   endpoint = () => 'https://api.manifold.co/graphql',
   getAuthToken,
+  clearAuthToken,
   version,
   retries = 3,
   clientId,
@@ -142,6 +144,7 @@ export function createGraphqlFetch({
     const authError = findAuthError(body.errors);
     if (authError && canRetry) {
       try {
+        clearAuthToken();
         await waitForAuthToken(getAuthToken, 15000, () => graphqlFetch(args, attempts + 1));
       } catch (e) {
         analytics.report({

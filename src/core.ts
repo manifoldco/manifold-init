@@ -4,6 +4,7 @@ interface InitOptions {
   authType?: 'manual' | 'oauth';
   env?: 'stage' | 'prod';
   getAuthToken: () => string | undefined;
+  clearAuthToken: () => void;
   clientId?: string;
   componentVersion: string;
   version: number;
@@ -13,7 +14,15 @@ interface InitOptions {
 export type Connection = Connection_v0;
 
 export function initialize(options: InitOptions): Connection {
-  const { version, element, env, componentVersion, clientId, getAuthToken } = options;
+  const {
+    version,
+    element,
+    env,
+    componentVersion,
+    clientId,
+    getAuthToken,
+    clearAuthToken,
+  } = options;
 
   switch (version) {
     case undefined: // latest
@@ -24,6 +33,7 @@ export function initialize(options: InitOptions): Connection {
         componentVersion,
         clientId,
         getAuthToken,
+        clearAuthToken,
       });
     default:
       throw new Error(

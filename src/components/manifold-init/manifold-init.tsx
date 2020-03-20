@@ -43,6 +43,7 @@ export class ManifoldInit {
       componentVersion,
       element,
       clientId: this.clientId,
+      clearAuthToken: this.clearAuthToken,
     });
   }
 
