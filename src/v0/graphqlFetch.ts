@@ -32,6 +32,7 @@ interface CreateGraphqlFetch {
   element: HTMLElement;
   version: string;
   retries?: number;
+  waitTime?: number;
   analytics: Analytics;
 }
 
@@ -70,6 +71,7 @@ export function createGraphqlFetch({
   retries = 3,
   clientId,
   analytics,
+  waitTime = 15000,
 }: CreateGraphqlFetch): GraphqlFetch {
   const options: RequestInit = {
     method: 'POST',
@@ -142,20 +144,25 @@ export function createGraphqlFetch({
 
     // Reauthenticate and retry on auth errors.
     const authError = findAuthError(body.errors);
-    if (authError && canRetry) {
+    if (authError) {
+      if (!canRetry) {
+        throw new ManifoldError({
+          type: ErrorType.AuthorizationError,
+          message: 'Auth token expired',
+        });
+      }
+
       try {
         clearAuthToken();
-        await waitForAuthToken(getAuthToken, 15000, () => graphqlFetch(args, attempts + 1));
+        return waitForAuthToken(getAuthToken, waitTime, () => graphqlFetch(args, attempts + 1));
       } catch (e) {
         analytics.report({
           message: e.message,
           name: 'manifold-init-error',
         });
-      }
 
-      return Promise.reject(
-        new ManifoldError({ type: ErrorType.AuthorizationError, message: authError.message })
-      );
+        throw new ManifoldError({ type: ErrorType.AuthorizationError, message: authError.message });
+      }
     }
 
     return body;
