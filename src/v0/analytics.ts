@@ -1,3 +1,8 @@
+export interface Analytics {
+  track: (evt: AnalyticsEvent) => Promise<Response>;
+  report: (det: ErrorDetail) => void;
+}
+
 /**
  *  Properties that should be found in every analytics event
  */
@@ -88,7 +93,7 @@ export interface CreateAnalytics {
   clientId?: string;
 }
 
-export default function createAnalytics(args: CreateAnalytics) {
+export default function createAnalytics(args: CreateAnalytics): Analytics {
   function stringifyProperties(evt: AnalyticsEvent) {
     return {
       ...evt,

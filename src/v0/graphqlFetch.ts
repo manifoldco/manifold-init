@@ -1,4 +1,6 @@
 import { ManifoldError, ErrorType } from './ManifoldError';
+import { Analytics } from './analytics';
+import { waitForAuthToken } from '../utils/auth';
 
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -24,10 +26,14 @@ const findAuthError = (errors: GraphqlError[] = []) =>
 
 interface CreateGraphqlFetch {
   endpoint?: () => string;
+  getAuthToken: () => string | undefined;
+  clearAuthToken: () => void;
   clientId?: string;
   element: HTMLElement;
   version: string;
   retries?: number;
+  waitTime?: number;
+  analytics: Analytics;
 }
 
 type GraphqlRequest =
@@ -59,9 +65,13 @@ export type GraphqlFetch = <T>(args: GraphqlRequest) => Promise<GraphqlResponseB
 export function createGraphqlFetch({
   element,
   endpoint = () => 'https://api.manifold.co/graphql',
+  getAuthToken,
+  clearAuthToken,
   version,
   retries = 3,
   clientId,
+  analytics,
+  waitTime = 15000,
 }: CreateGraphqlFetch): GraphqlFetch {
   const options: RequestInit = {
     method: 'POST',
@@ -73,8 +83,15 @@ export function createGraphqlFetch({
     },
   };
 
+  const token = getAuthToken();
+
   if (clientId) {
     options.headers['Manifold-Client-ID'] = clientId;
+  }
+
+  if (token) {
+    /* eslint-disable-next-line dot-notation */
+    options.headers['Authorization'] = `Bearer ${token}`;
   }
 
   async function graphqlFetch<T>(
@@ -127,11 +144,25 @@ export function createGraphqlFetch({
 
     // Reauthenticate and retry on auth errors.
     const authError = findAuthError(body.errors);
-    if (authError && canRetry) {
-      // TODO retry auth
-      return Promise.reject(
-        new ManifoldError({ type: ErrorType.AuthorizationError, message: authError.message })
-      );
+    if (authError) {
+      if (!canRetry) {
+        throw new ManifoldError({
+          type: ErrorType.AuthorizationError,
+          message: 'Auth token expired',
+        });
+      }
+
+      try {
+        clearAuthToken();
+        return waitForAuthToken(getAuthToken, waitTime, () => graphqlFetch(args, attempts + 1));
+      } catch (e) {
+        analytics.report({
+          message: e.message,
+          name: 'manifold-init-error',
+        });
+
+        throw new ManifoldError({ type: ErrorType.AuthorizationError, message: authError.message });
+      }
     }
 
     return body;

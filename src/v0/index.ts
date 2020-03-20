@@ -16,8 +16,12 @@ const connection = (options: {
   element: HTMLElement;
   componentVersion: string;
   clientId?: string;
+  getAuthToken: () => string | undefined;
+  clearAuthToken: () => void;
 }): Connection => {
-  const { componentVersion, element, env, clientId } = options;
+  const { componentVersion, element, env, clientId, getAuthToken, clearAuthToken } = options;
+
+  const analytics = createAnalytics({ env, element, componentVersion, clientId });
 
   return {
     gateway: createGateway({
@@ -35,7 +39,10 @@ const connection = (options: {
     graphqlFetch: createGraphqlFetch({
       element,
       version: componentVersion,
+      getAuthToken,
+      clearAuthToken,
       clientId,
+      analytics,
       endpoint: () => {
         switch (env) {
           case 'stage':
@@ -47,7 +54,7 @@ const connection = (options: {
         }
       },
     }),
-    analytics: createAnalytics({ env, element, componentVersion, clientId }),
+    analytics,
   };
 };
 
