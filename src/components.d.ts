@@ -49,6 +49,8 @@ declare namespace LocalJSX {
     'authType'?: 'manual' | 'oauth';
     'clientId'?: string;
     'env'?: 'stage' | 'prod';
+    'onManifold-auth-token-clear'?: (event: CustomEvent<any>) => void;
+    'onManifold-auth-token-receive'?: (event: CustomEvent<string>) => void;
   }
 
   interface IntrinsicElements {
