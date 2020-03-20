@@ -103,7 +103,7 @@ describe('graphqlFetch', () => {
 
   describe('Expired auth tokens', () => {
     describe('with no retries', () => {
-      it('', async () => {
+      it('throws when expired', async () => {
         const fetcher = createGraphqlFetch({
           endpoint: () => graphqlEndpoint,
           getAuthToken: () => undefined,
@@ -132,10 +132,11 @@ describe('graphqlFetch', () => {
 
     describe('with retries', () => {
       it('will retry if the token is refreshed', async () => {
+        const clearAuthToken = jest.fn();
         const fetcher = createGraphqlFetch({
           endpoint: () => graphqlEndpoint,
           getAuthToken: () => undefined,
-          clearAuthToken: () => {},
+          clearAuthToken,
           analytics: { track: jest.fn(), report: jest.fn() },
           element: document.createElement('custom-element'),
           version: 'test',
@@ -167,6 +168,7 @@ describe('graphqlFetch', () => {
 
         const result = await fetch;
 
+        expect(clearAuthToken).toHaveBeenCalled();
         expect(fetchMock.calls()).toHaveLength(2);
         expect(result).toEqual(body);
       });
