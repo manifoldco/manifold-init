@@ -2,7 +2,7 @@ import connection, { Connection as Connection_v0 } from './v0';
 
 interface InitOptions {
   authType?: 'manual' | 'oauth';
-  env?: 'stage' | 'prod';
+  env?: 'local' | 'stage' | 'prod';
   getAuthToken: () => string | undefined;
   clearAuthToken: () => void;
   clientId?: string;
