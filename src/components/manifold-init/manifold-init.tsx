@@ -8,7 +8,7 @@ export interface Connection extends core.Connection {}
   tag: 'manifold-init',
 })
 export class ManifoldInit {
-  @Prop() env?: 'stage' | 'prod' = 'prod';
+  @Prop() env?: 'local' | 'stage' | 'prod' = 'prod';
   @Prop({ mutable: true }) authToken?: string;
   @Prop() authType?: 'manual' | 'oauth' = 'oauth';
   @Prop() clientId?: string;

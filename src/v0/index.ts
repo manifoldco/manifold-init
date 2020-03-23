@@ -30,7 +30,7 @@ const connection = (options: {
           case 'stage':
             return 'https://api.stage.manifold.co/v1';
           case 'local':
-            return 'https://api.arigato.tools/v1';
+            return 'http://api.gateway.arigato.tools/v1';
           default:
             return 'https://api.manifold.co/v1';
         }
@@ -48,7 +48,7 @@ const connection = (options: {
           case 'stage':
             return 'https://api.stage.manifold.co/graphql';
           case 'local':
-            return 'https://api.arigato.tools/graphql';
+            return 'http://graphql.arigato.tools/graphql';
           default:
             return 'https://api.manifold.co/graphql';
         }
