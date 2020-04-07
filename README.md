@@ -91,4 +91,4 @@ export * from '@manifoldco/manifold-init-types/types/components';
 
 [manifold-plan-table]: https://github.com/manifoldco/manifold-plan-table
 [createProfileAuthToken]: https://api.manifold.co/
-[init-types]:
+[init-types]: https://www.npmjs.com/package/@manifoldco/manifold-init-types
