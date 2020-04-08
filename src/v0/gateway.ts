@@ -5,7 +5,7 @@ function wait(ms) {
 }
 
 export interface Gateway {
-  post: <Resp, Req extends {}>(path: string, body: Req) => Promise<Resp>;
+  post: <Resp, Req extends {}>(path: string, body: Req, init?: RequestInit) => Promise<Resp>;
 }
 
 export function createGateway({

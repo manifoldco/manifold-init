@@ -60,7 +60,10 @@ export interface GraphqlResponseBody<GraphqlData> {
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = <T>(args: GraphqlRequest) => Promise<GraphqlResponseBody<T>>;
+export type GraphqlFetch = <T>(
+  args: GraphqlRequest,
+  init?: RequestInit
+) => Promise<GraphqlResponseBody<T>>;
 
 export function createGraphqlFetch({
   element,
