@@ -73,31 +73,36 @@ export function createGraphqlFetch({
   analytics,
   waitTime = 15000,
 }: CreateGraphqlFetch): GraphqlFetch {
-  const options: RequestInit = {
-    method: 'POST',
-    headers: {
-      Connection: 'keep-alive',
-      'Content-type': 'application/json',
-      'x-mui-component': `${element.tagName}@${version}`,
-      'x-manifold-manifold-init-version': '<@NPM_PACKAGE_VERSION@>',
-    },
-  };
-
-  const token = getAuthToken();
-
-  if (clientId) {
-    options.headers['Manifold-Client-ID'] = clientId;
-  }
-
-  if (token) {
-    /* eslint-disable-next-line dot-notation */
-    options.headers['Authorization'] = `Bearer ${token}`;
-  }
-
   async function graphqlFetch<T>(
     args: GraphqlRequest,
-    attempts: number
+    attempts: number,
+    init?: RequestInit
   ): Promise<GraphqlResponseBody<T>> {
+    const opts = init || {};
+    const headers = opts.headers || {};
+    const options: RequestInit = {
+      ...opts,
+      method: 'POST',
+      headers: {
+        ...headers,
+        Connection: 'keep-alive',
+        'Content-type': 'application/json',
+        'x-mui-component': `${element.tagName}@${version}`,
+        'x-manifold-manifold-init-version': '<@NPM_PACKAGE_VERSION@>',
+      },
+    };
+
+    const token = getAuthToken();
+
+    if (clientId) {
+      options.headers['Manifold-Client-ID'] = clientId;
+    }
+
+    if (token) {
+      /* eslint-disable-next-line dot-notation */
+      options.headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const canRetry = attempts < retries;
 
     // Send Request
@@ -109,7 +114,7 @@ export function createGraphqlFetch({
       // Retry
       if (canRetry) {
         await wait(attempts ** 2 * 1000);
-        return graphqlFetch(args, attempts + 1);
+        return graphqlFetch(args, attempts + 1, init);
       }
       return Promise.reject(new ManifoldError({ type: ErrorType.NetworkError }));
     }
@@ -127,7 +132,7 @@ export function createGraphqlFetch({
     if (serverError) {
       if (canRetry) {
         await wait(attempts ** 2 * 1000);
-        return graphqlFetch(args, attempts + 1);
+        return graphqlFetch(args, attempts + 1, init);
       }
       return Promise.reject(
         new ManifoldError({ type: ErrorType.ServerError, message: response.statusText })
@@ -154,7 +159,9 @@ export function createGraphqlFetch({
 
       try {
         clearAuthToken();
-        return waitForAuthToken(getAuthToken, waitTime, () => graphqlFetch(args, attempts + 1));
+        return waitForAuthToken(getAuthToken, waitTime, () =>
+          graphqlFetch(args, attempts + 1, init)
+        );
       } catch (e) {
         analytics.report({
           message: e.message,
@@ -168,7 +175,7 @@ export function createGraphqlFetch({
     return body;
   }
 
-  return function(args: GraphqlRequest) {
-    return graphqlFetch(args, 0);
+  return function(args: GraphqlRequest, init?: RequestInit) {
+    return graphqlFetch(args, 0, init);
   };
 }
