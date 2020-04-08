@@ -12,11 +12,20 @@ export function createGateway({
   baseUrl = () => 'https://api.manifold.co/graphql',
   retries = 3,
 }): Gateway {
-  async function post<Req extends {}, Resp>(path: string, body: Req, attempts: number) {
+  async function post<Req extends {}, Resp>(
+    path: string,
+    body: Req,
+    attempts: number,
+    init?: RequestInit
+  ) {
+    const opts = init || {};
+    const headers = opts.headers || {};
     const options: RequestInit = {
+      ...opts,
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
+        ...headers,
         Connection: 'keep-alive',
         'Content-type': 'application/json',
       },
@@ -30,7 +39,7 @@ export function createGateway({
     } catch (e) {
       if (canRetry) {
         await wait(attempts ** 2 * 1000);
-        return post(path, body, attempts + 1);
+        return post(path, body, attempts + 1, init);
       }
     }
 
@@ -53,7 +62,7 @@ export function createGateway({
     if (serverError) {
       if (canRetry) {
         await wait(attempts ** 2 * 1000);
-        return post(path, body, attempts + 1);
+        return post(path, body, attempts + 1, init);
       }
       return Promise.reject(
         new ManifoldError({ type: ErrorType.ServerError, message: resp.statusText })
@@ -63,5 +72,5 @@ export function createGateway({
     return (await resp.json()) as Resp;
   }
 
-  return { post: <Req>(path: string, body: Req) => post(path, body, 0) };
+  return { post: <Req>(path: string, body: Req, init?: RequestInit) => post(path, body, 0, init) };
 }
