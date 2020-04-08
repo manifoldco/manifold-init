@@ -17,7 +17,7 @@ export namespace Components {
     'authToken'?: string;
     'authType'?: 'manual' | 'oauth';
     'clientId'?: string;
-    'env'?: 'stage' | 'prod';
+    'env'?: 'local' | 'stage' | 'prod';
     'initialize': (options: { element: HTMLElement; componentVersion: string; version: number; }) => Promise<Connection>;
   }
 }
@@ -48,7 +48,7 @@ declare namespace LocalJSX {
     'authToken'?: string;
     'authType'?: 'manual' | 'oauth';
     'clientId'?: string;
-    'env'?: 'stage' | 'prod';
+    'env'?: 'local' | 'stage' | 'prod';
     'onManifold-auth-token-clear'?: (event: CustomEvent<any>) => void;
     'onManifold-auth-token-receive'?: (event: CustomEvent<string>) => void;
   }
