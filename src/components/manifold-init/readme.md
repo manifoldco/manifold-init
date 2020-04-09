@@ -7,12 +7,20 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type                  | Default     |
-| ----------- | ------------ | ----------- | --------------------- | ----------- |
-| `authToken` | `auth-token` |             | `string`              | `undefined` |
-| `authType`  | `auth-type`  |             | `"manual" \| "oauth"` | `'oauth'`   |
-| `clientId`  | `client-id`  |             | `string`              | `undefined` |
-| `env`       | `env`        |             | `"prod" \| "stage"`   | `'prod'`    |
+| Property    | Attribute    | Description | Type                           | Default     |
+| ----------- | ------------ | ----------- | ------------------------------ | ----------- |
+| `authToken` | `auth-token` |             | `string`                       | `undefined` |
+| `authType`  | `auth-type`  |             | `"manual" \| "oauth"`          | `'oauth'`   |
+| `clientId`  | `client-id`  |             | `string`                       | `undefined` |
+| `env`       | `env`        |             | `"local" \| "prod" \| "stage"` | `'prod'`    |
+
+
+## Events
+
+| Event                         | Description | Type                  |
+| ----------------------------- | ----------- | --------------------- |
+| `manifold-auth-token-clear`   |             | `CustomEvent<any>`    |
+| `manifold-auth-token-receive` |             | `CustomEvent<string>` |
 
 
 ## Methods
