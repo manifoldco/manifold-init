@@ -37,6 +37,10 @@ export function createGateway({
     try {
       resp = await fetch(`${baseUrl()}${path}`, options);
     } catch (e) {
+      if (e.name === 'AbortError') {
+        throw e;
+      }
+
       if (canRetry) {
         await wait(attempts ** 2 * 1000);
         return post(path, body, attempts + 1, init);

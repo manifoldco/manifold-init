@@ -114,6 +114,10 @@ export function createGraphqlFetch({
       options.body = JSON.stringify(args);
       response = await fetch(endpoint(), options);
     } catch (e) {
+      if (e.name === 'AbortError') {
+        throw e;
+      }
+
       // Retry
       if (canRetry) {
         await wait(attempts ** 2 * 1000);
