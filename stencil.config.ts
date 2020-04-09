@@ -10,7 +10,7 @@ export const config: Config = {
   outputTargets: [
     reactOutputTarget({
       componentCorePackage: '@manifoldco/manifold-init',
-      proxiesFile: 'dist/react/components.ts',
+      proxiesFile: 'react/components.ts',
     }),
     {
       type: 'dist',
