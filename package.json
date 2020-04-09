@@ -13,7 +13,8 @@
   "files": [
     "dist/",
     "loader/",
-    "src/"
+    "src/",
+    "react/"
   ],
   "version": "0.4.0-beta.0",
   "description": "Manifold UI Initialization",
