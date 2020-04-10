@@ -1,0 +1,28 @@
+{
+  "name": "@manifoldco/manifold-init-react",
+  "version": "0.1.5",
+  "description": "",
+  "main": "./dist/cjs/components.js",
+  "module": "./dist/es/components.js",
+  "types": "./dist/components.d.ts",
+  "scripts": {
+    "build": "npm run clean && rollup -c",
+    "compile": "tsc -p .",
+    "clean": "rm -rf dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-typescript": "^4.0.0",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rollup": "^2.4.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@manifoldco/manifold-init": "^0.7.2"
+  }
+}
