@@ -10,6 +10,10 @@ interface SharedProperties {
   description?: string;
 }
 
+interface Payload {
+  [k: string]: string | number | boolean | Payload;
+}
+
 /**
  *  Based on `name`, what data should be sent?
  */
@@ -48,9 +52,7 @@ export type EventTypes =
     }
   | {
       name: 'click';
-      properties: {
-        planId: string;
-      };
+      properties: Payload;
     };
 
 export type EventEvent = {
