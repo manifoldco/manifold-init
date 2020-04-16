@@ -25,6 +25,9 @@ const connection = (options: {
 
   return {
     gateway: createGateway({
+      getAuthToken,
+      clearAuthToken,
+      analytics,
       baseUrl: () => {
         switch (env) {
           case 'stage':
