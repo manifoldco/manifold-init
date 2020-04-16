@@ -22,7 +22,7 @@ export class ManifoldError extends Error {
       case ErrorType.ServerError:
         return 'Manifold Error: Server Failed';
       case ErrorType.ClientError:
-        return 'Manifold Error: Client Input No Bueno';
+        return this.message;
       default:
         return 'Manifold Error: Unknown';
     }
