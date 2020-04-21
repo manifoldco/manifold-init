@@ -121,7 +121,7 @@ describe('graphqlFetch', () => {
         });
 
         expect.assertions(2);
-        return fetcher({ query: '' }).catch(result => {
+        return fetcher({ query: '' }).catch((result) => {
           expect(fetchMock.called(graphqlEndpoint)).toBe(true);
           expect(result).toEqual(
             new ManifoldError({ type: ErrorType.AuthorizationError, message: 'Auth token expired' })
@@ -156,7 +156,7 @@ describe('graphqlFetch', () => {
         const fetch = fetcher({ query: '' });
 
         /* Queue the dispatch back a tick to allow listeners to be set up */
-        await new Promise(resolve => {
+        await new Promise((resolve) => {
           setTimeout(() => {
             document.dispatchEvent(
               new CustomEvent('manifold-auth-token-receive', { detail: { token: '12344' } })

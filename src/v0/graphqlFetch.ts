@@ -3,7 +3,7 @@ import { Analytics } from './analytics';
 import { waitForAuthToken } from '../utils/auth';
 
 function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // Transforms an HTTP error to fit the GraphQL error format.
@@ -22,7 +22,7 @@ const transformError = (response: Response) => {
 };
 
 const findAuthError = (errors: GraphqlError[] = []) =>
-  errors.find(e => e.extensions && e.extensions.type === 'AuthFailed');
+  errors.find((e) => e.extensions && e.extensions.type === 'AuthFailed');
 
 interface CreateGraphqlFetch {
   endpoint?: () => string;
@@ -182,7 +182,7 @@ export function createGraphqlFetch({
     return body;
   }
 
-  return function(args: GraphqlRequest, init?: RequestInit) {
+  return function (args: GraphqlRequest, init?: RequestInit) {
     return graphqlFetch(args, 0, init);
   };
 }

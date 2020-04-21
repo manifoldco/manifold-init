@@ -96,7 +96,7 @@ describe('gateway', () => {
           const fetch = gateway.post(path, {});
 
           /* Queue the dispatch back a tick to allow listeners to be set up */
-          await new Promise(resolve => {
+          await new Promise((resolve) => {
             setTimeout(() => {
               document.dispatchEvent(
                 new CustomEvent('manifold-auth-token-receive', { detail: { token: '12344' } })
