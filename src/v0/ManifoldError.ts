@@ -1,6 +1,7 @@
 export enum ErrorType {
   AuthorizationError = 'MANIFOLD::AUTHORIZATION_ERROR',
   NetworkError = 'MANIFOLD::NETWORK_ERROR',
+  ClientError = 'MANIFOLD::CLIENT_ERROR',
   ServerError = 'MANIFOLD::SERVER_ERROR',
   UnknownError = 'MANIFOLD::UNKNOWN_ERROR',
 }
@@ -20,6 +21,8 @@ export class ManifoldError extends Error {
         return 'Manifold Error: Network Call Failed';
       case ErrorType.ServerError:
         return 'Manifold Error: Server Failed';
+      case ErrorType.ClientError:
+        return this.message;
       default:
         return 'Manifold Error: Unknown';
     }
