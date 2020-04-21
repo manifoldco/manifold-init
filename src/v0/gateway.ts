@@ -5,7 +5,7 @@ import { Analytics } from './analytics';
 import { waitForAuthToken } from '../utils/auth';
 
 function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export interface Gateway {
