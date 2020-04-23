@@ -16,10 +16,19 @@ const connection = (options: {
   element: HTMLElement;
   componentVersion: string;
   clientId?: string;
+  preview?: boolean;
   getAuthToken: () => string | undefined;
   clearAuthToken: () => void;
 }): Connection => {
-  const { componentVersion, element, env, clientId, getAuthToken, clearAuthToken } = options;
+  const {
+    componentVersion,
+    element,
+    env,
+    clientId,
+    getAuthToken,
+    clearAuthToken,
+    preview,
+  } = options;
 
   const analytics = createAnalytics({ env, element, componentVersion, clientId });
 
@@ -46,6 +55,7 @@ const connection = (options: {
       clearAuthToken,
       clientId,
       analytics,
+      preview,
       endpoint: () => {
         switch (env) {
           case 'stage':
