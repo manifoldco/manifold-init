@@ -5,6 +5,7 @@ import { createGateway, Gateway } from './gateway';
 export interface Connection {
   graphqlFetch: GraphqlFetch;
   gateway: Gateway;
+  getOwnerId: () => string | undefined;
   analytics: {
     track: (e: AnalyticsEvent) => Promise<Response>;
     report: (detail: ErrorDetail) => void;
@@ -19,6 +20,7 @@ const connection = (options: {
   preview?: boolean;
   getAuthToken: () => string | undefined;
   clearAuthToken: () => void;
+  getOwnerId: () => string | undefined;
 }): Connection => {
   const {
     componentVersion,
@@ -28,11 +30,13 @@ const connection = (options: {
     getAuthToken,
     clearAuthToken,
     preview,
+    getOwnerId,
   } = options;
 
   const analytics = createAnalytics({ env, element, componentVersion, clientId });
 
   return {
+    getOwnerId,
     gateway: createGateway({
       getAuthToken,
       clearAuthToken,

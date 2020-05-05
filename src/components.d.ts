@@ -19,6 +19,7 @@ export namespace Components {
             componentVersion: string;
             version: number;
         }) => Promise<Connection>;
+        "ownerId"?: string;
     }
 }
 declare global {
@@ -49,6 +50,7 @@ declare namespace LocalJSX {
         "env"?: "local" | "stage" | "prod";
         "onManifold-auth-token-clear"?: (event: CustomEvent<any>) => void;
         "onManifold-auth-token-receive"?: (event: CustomEvent<string>) => void;
+        "ownerId"?: string;
     }
     interface IntrinsicElements {
         "connected-button": ConnectedButton;

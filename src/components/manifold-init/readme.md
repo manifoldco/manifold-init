@@ -13,6 +13,7 @@
 | `authType`  | `auth-type`  |             | `"manual" \| "oauth"`          | `'oauth'`   |
 | `clientId`  | `client-id`  |             | `string`                       | `undefined` |
 | `env`       | `env`        |             | `"local" \| "prod" \| "stage"` | `'prod'`    |
+| `ownerId`   | `owner-id`   |             | `string`                       | `undefined` |
 
 
 ## Events

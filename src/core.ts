@@ -5,6 +5,7 @@ interface InitOptions {
   env?: 'local' | 'stage' | 'prod';
   preview?: boolean;
   getAuthToken: () => string | undefined;
+  getOwnerId: () => string | undefined;
   clearAuthToken: () => void;
   clientId?: string;
   componentVersion: string;
@@ -24,6 +25,7 @@ export function initialize(options: InitOptions): Connection {
     getAuthToken,
     clearAuthToken,
     preview = false,
+    getOwnerId,
   } = options;
 
   switch (version) {
@@ -37,6 +39,7 @@ export function initialize(options: InitOptions): Connection {
         getAuthToken,
         clearAuthToken,
         preview,
+        getOwnerId,
       });
     default:
       throw new Error(
