@@ -28,6 +28,7 @@ interface CreateGraphqlFetch {
   endpoint?: () => string;
   getAuthToken: () => string | undefined;
   clearAuthToken: () => void;
+  preview?: boolean;
   clientId?: string;
   element: HTMLElement;
   version: string;
@@ -75,6 +76,7 @@ export function createGraphqlFetch({
   clientId,
   analytics,
   waitTime = 15000,
+  preview,
 }: CreateGraphqlFetch): GraphqlFetch {
   async function graphqlFetch<T>(
     args: GraphqlRequest,
@@ -99,6 +101,14 @@ export function createGraphqlFetch({
 
     if (clientId) {
       options.headers['Manifold-Client-ID'] = clientId;
+    }
+
+    if (preview) {
+      if (token) {
+        console.error('Preview mode cannot be used with an auth token');
+      } else {
+        options.headers['X-Manifold-Sample'] = 'Platform';
+      }
     }
 
     if (token) {

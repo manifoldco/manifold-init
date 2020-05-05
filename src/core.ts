@@ -3,6 +3,7 @@ import connection, { Connection as Connection_v0 } from './v0';
 interface InitOptions {
   authType?: 'manual' | 'oauth';
   env?: 'local' | 'stage' | 'prod';
+  preview?: boolean;
   getAuthToken: () => string | undefined;
   getOwnerId: () => string | undefined;
   clearAuthToken: () => void;
@@ -23,6 +24,7 @@ export function initialize(options: InitOptions): Connection {
     clientId,
     getAuthToken,
     clearAuthToken,
+    preview = false,
     getOwnerId,
   } = options;
 
@@ -36,6 +38,7 @@ export function initialize(options: InitOptions): Connection {
         clientId,
         getAuthToken,
         clearAuthToken,
+        preview,
         getOwnerId,
       });
     default:
