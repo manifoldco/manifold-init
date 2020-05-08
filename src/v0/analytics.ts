@@ -15,9 +15,10 @@ interface Payload {
 }
 
 /**
+ *  Metric Event Types are events that are sent for observability telemety.
  *  Based on `name`, what data should be sent?
  */
-export type EventTypes =
+export type MetricEventTypes =
   | {
       name: 'load';
       properties: {
@@ -49,16 +50,31 @@ export type EventTypes =
         rttGraphql: number;
         load: number;
       };
-    }
+    };
+
+/**
+ *  Component Analytics Event Types are events that are sent for customer analytics.
+ *  Based on `name`, what data should be sent?
+ */
+export type ComponentAnalyticsEventTypes =
   | {
       name: 'click';
       properties: Payload;
+    }
+  | {
+      name: 'component-load';
+      properties: Payload;
     };
 
-export type EventEvent = {
-  type: 'metric' | 'component-analytics';
+export type MetricEvent = {
+  type: 'metric';
 } & SharedProperties &
-  EventTypes;
+  MetricEventTypes;
+
+export type ComponentAnalyticsEvent = {
+  type: 'component-analytics';
+} & SharedProperties &
+  ComponentAnalyticsEventTypes;
 
 /**
  *  Error analytics event
@@ -80,7 +96,7 @@ export interface ErrorDetail {
   message?: string;
 }
 
-export type AnalyticsEvent = ErrorEvent | EventEvent;
+export type AnalyticsEvent = ErrorEvent | MetricEvent | ComponentAnalyticsEvent;
 
 export const endpoint = {
   local: 'http://analytics.arigato.tools/v1/events',
