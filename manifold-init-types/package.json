@@ -1,6 +1,6 @@
 {
   "name": "@manifoldco/manifold-init-types",
-  "version": "0.7.3",
+  "version": "0.7.3-next.0",
   "private": false,
   "description": "TypeScript types for manifold-init",
   "author": "manifoldco",
