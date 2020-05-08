@@ -35,6 +35,13 @@ const connection = (options: {
 
   const analytics = createAnalytics({ env, element, componentVersion, clientId });
 
+  analytics.track({
+    description: 'Track component load event',
+    name: 'component-load',
+    type: 'component-analytics',
+    properties: {},
+  });
+
   return {
     getOwnerId,
     gateway: createGateway({
