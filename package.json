@@ -16,7 +16,7 @@
     "src/",
     "react/"
   ],
-  "version": "0.7.3-next.0",
+  "version": "0.7.4",
   "description": "Manifold UI Initialization",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
