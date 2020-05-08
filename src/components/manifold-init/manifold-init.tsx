@@ -1,5 +1,6 @@
-import { Component, Prop, Method, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Prop, Method, Element, Event, EventEmitter, Watch } from '@stencil/core';
 import * as core from '../../core';
+import createAnalytics from '../../v0/analytics';
 
 /* eslint-disable-next-line @typescript-eslint/no-empty-interface */
 export interface Connection extends core.Connection {}
@@ -8,6 +9,7 @@ export interface Connection extends core.Connection {}
   tag: 'manifold-init',
 })
 export class ManifoldInit {
+  @Element() el: HTMLElement;
   @Prop() env?: 'local' | 'stage' | 'prod' = 'prod';
   @Prop({ mutable: true }) authToken?: string;
   @Prop() authType?: 'manual' | 'oauth' = 'oauth';
@@ -46,6 +48,23 @@ export class ManifoldInit {
       element,
       clientId: this.clientId,
       clearAuthToken: this.clearAuthToken,
+    });
+  }
+
+  async componentWillLoad() {
+    const analytics = createAnalytics({
+      env: this.env,
+      element: this.el,
+      componentVersion: '<@NPM_PACKAGE_VERSION@>',
+      clientId: this.clientId,
+    });
+    analytics.track({
+      description: 'Track component load event',
+      name: 'component-load',
+      type: 'component-analytics',
+      properties: {
+        ownerId: this.ownerId || '',
+      },
     });
   }
 
