@@ -20,9 +20,6 @@ export const config: Config = {
       esmLoaderPath: '../loader',
     },
     {
-      type: 'docs-readme',
-    },
-    {
       type: 'www',
       serviceWorker: null, // disable service workers
     },
