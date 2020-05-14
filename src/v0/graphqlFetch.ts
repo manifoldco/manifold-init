@@ -2,7 +2,7 @@ import { ManifoldError, ErrorType } from './ManifoldError';
 import { Analytics } from './analytics';
 import { waitForAuthToken } from '../utils/auth';
 
-function wait(ms) {
+function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
@@ -84,12 +84,11 @@ export function createGraphqlFetch({
     init?: RequestInit
   ): Promise<GraphqlResponseBody<T>> {
     const opts = init || {};
-    const headers = opts.headers || {};
     const options: RequestInit = {
       ...opts,
       method: 'POST',
       headers: {
-        ...headers,
+        ...(opts.headers || {}),
         Connection: 'keep-alive',
         'Content-type': 'application/json',
         'x-mui-component': `${element.tagName}@${version}`,
@@ -99,21 +98,23 @@ export function createGraphqlFetch({
 
     const token = getAuthToken();
 
+    const headers = options.headers as { [key: string]: any };
+
     if (clientId) {
-      options.headers['Manifold-Client-ID'] = clientId;
+      headers['Manifold-Client-ID'] = clientId;
     }
 
     if (preview) {
       if (token) {
         console.error('Preview mode cannot be used with an auth token');
       } else {
-        options.headers['X-Manifold-Sample'] = 'Platform';
+        headers['X-Manifold-Sample'] = 'Platform';
       }
     }
 
     if (token) {
       /* eslint-disable-next-line dot-notation */
-      options.headers['Authorization'] = `Bearer ${token}`;
+      headers['Authorization'] = `Bearer ${token}`;
     }
 
     const canRetry = attempts < retries;

@@ -4,7 +4,7 @@ import { RestError } from './RestError';
 import { Analytics } from './analytics';
 import { waitForAuthToken } from '../utils/auth';
 
-function wait(ms) {
+function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
@@ -29,12 +29,12 @@ export function createGateway({
   waitTime = 15000,
   retries = 3,
 }: CreateGateway): Gateway {
-  async function post<Req extends {}, Resp>(
+  async function post<Req, Resp>(
     path: string,
     body: Req,
     attempts: number,
     init?: RequestInit
-  ) {
+  ): Promise<Resp> {
     const opts = init || {};
     const headers = opts.headers || {};
     const options: RequestInit = {

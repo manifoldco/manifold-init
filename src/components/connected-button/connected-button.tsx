@@ -12,9 +12,13 @@ export class ConnectedButton {
   @State() planCost?: string;
 
   connection: Connection;
+
   async componentWillLoad() {
     await customElements.whenDefined('manifold-init');
     const core = document.querySelector<HTMLManifoldInitElement>('manifold-init');
+    if (!core) {
+      throw new Error('<manifold-init> not found in document');
+    }
     this.connection = await core.initialize({
       element: this.el,
       version: 0,

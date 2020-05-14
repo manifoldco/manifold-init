@@ -53,7 +53,7 @@ export class ManifoldInit {
 
   async componentWillLoad() {
     const analytics = createAnalytics({
-      env: this.env,
+      env: this.env || 'prod',
       element: this.el,
       componentVersion: '<@NPM_PACKAGE_VERSION@>',
       clientId: this.clientId,

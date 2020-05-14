@@ -32,7 +32,7 @@ export function initialize(options: InitOptions): Connection {
     case undefined: // latest
     case 0:
       return connection({
-        env,
+        env: env || 'prod',
         element,
         componentVersion,
         clientId,

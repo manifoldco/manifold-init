@@ -32,6 +32,7 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/no-empty-function': 'off', // why are you like this
     '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
     'arrow-parens': 'off', // let Prettier decide
     camelcase: 'off', // underscores are a thing
