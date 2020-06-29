@@ -53,7 +53,7 @@
   "devDependencies": {
     "@manifoldco/eslint-plugin-stencil": "^0.4.1",
     "@stencil/core": "^1.13.0",
-    "@stencil/react-output-target": "0.0.6",
+    "@stencil/react-output-target": "0.0.7",
     "@types/jest": "^25.2.2",
     "@types/node": "^14.0.1",
     "@types/puppeteer": "^3.0.0",
